@@ -1,6 +1,6 @@
 import { Component, ViewChildren, TemplateRef, ComponentFactoryResolver, QueryList, AfterViewInit, ElementRef, ViewContainerRef, ComponentFactory, Injector } from '@angular/core';
 import { GameGeneratorService, Gameplay } from './utils/game-generator/game-generator.service';
-import { CardDeckComponent } from './card-deck/card-deck.component';
+import { ConfigService } from './conf/config.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,12 @@ import { CardDeckComponent } from './card-deck/card-deck.component';
 })
 export class AppComponent {
 
+
   public game: Gameplay;
 
-  constructor(private injector: Injector, private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private _configService: ConfigService) {
     this.game = GameGeneratorService.newGame(4);
+    this._configService.getUsers().then((res) => { console.log("success"); }, (error) => { console.log("error"); });
   }
 
   public drawCard(player: number) {
