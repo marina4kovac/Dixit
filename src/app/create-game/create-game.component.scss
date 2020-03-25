@@ -1,0 +1,10 @@
+.form-group {
+
+  &.has-error {
+    color: red;
+  }
+
+  .control-label {
+    font-weight: bold;
+  }
+}

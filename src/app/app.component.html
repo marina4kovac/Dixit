@@ -1,6 +1,8 @@
-<div>
-  <div *ngFor="let deck of game.players_decks; let i = index">
-    <card-deck [cards]="deck"></card-deck>
-    <button (click)="drawCard(i)">Draw</button>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>Create new game</h3>
+      <create-game></create-game>
+    </div>
   </div>
 </div>

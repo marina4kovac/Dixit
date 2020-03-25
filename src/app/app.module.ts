@@ -9,16 +9,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfigService } from './conf/config.service';
 import { API_URL, ApiUrlInterceptorService } from './conf/api-url-interceptor.service';
 import { environment } from '../environments/environment';
+import { CreateGameComponent } from './create-game/create-game.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
     CardHolderComponent,
-    CardDeckComponent
+    CardDeckComponent,
+    CreateGameComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     ConfigService,
