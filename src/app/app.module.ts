@@ -11,13 +11,18 @@ import { API_URL, ApiUrlInterceptorService } from './conf/api-url-interceptor.se
 import { environment } from '../environments/environment';
 import { CreateGameComponent } from './create-game/create-game.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { GameOptionsComponent } from './game-options/game-options.component';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardHolderComponent,
     CardDeckComponent,
-    CreateGameComponent
+    CreateGameComponent,
+    LoginComponent,
+    GameOptionsComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   providers: [
     ConfigService,
     { provide: API_URL, useValue: environment.apiUrl },
-    { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptorService, multi: true, deps: [API_URL] }
+    { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptorService, multi: true, deps: [API_URL] },
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

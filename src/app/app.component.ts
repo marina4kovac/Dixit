@@ -1,11 +1,12 @@
-import { Component, ViewChildren, TemplateRef, ComponentFactoryResolver, QueryList, AfterViewInit, ElementRef, ViewContainerRef, ComponentFactory, Injector } from '@angular/core';
+import { Component, ViewChildren, TemplateRef, ComponentFactoryResolver, QueryList, AfterViewInit, ElementRef, ViewContainerRef, ComponentFactory, Injector, ViewEncapsulation } from '@angular/core';
 import { GameGeneratorService, Gameplay } from './utils/game-generator/game-generator.service';
 import { ConfigService } from './conf/config.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
 

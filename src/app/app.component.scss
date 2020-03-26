@@ -1,0 +1,24 @@
+.form-group {
+
+  &.has-error {
+    color: red;
+    padding-bottom: 0px;
+  }
+
+  padding-bottom: 8px;
+
+
+  .control-label {
+    font-weight: bold;
+  }
+
+  .help-block {
+    margin-bottom: -16px;
+  }
+}
+
+html,
+body,
+.container-fluid {
+  height: 100%;
+}

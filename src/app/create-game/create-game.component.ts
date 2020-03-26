@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'create-game',
   templateUrl: './create-game.component.html',
-  styleUrls: ['./create-game.component.scss']
+  styleUrls: ['./create-game.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CreateGameComponent implements OnInit {
   registered = false;
