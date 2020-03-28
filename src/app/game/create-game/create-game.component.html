@@ -20,5 +20,8 @@
       <button type="submit" class="btn btn-primary">Create</button>
     </div>
 
+    <div *ngIf="message" class="form-group has-error">
+      <p class="help-block">{{message}}</p>
+    </div>
   </form>
 </div>

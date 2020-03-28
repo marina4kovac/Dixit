@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { GameGeneratorService } from '../utils/game-generator/game-generator.service';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'card-deck',
   templateUrl: './card-deck.component.html',
-  styleUrls: ['./card-deck.component.scss']
+  styleUrls: ['./card-deck.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CardDeckComponent implements OnInit {
 

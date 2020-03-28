@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 
 const card_image_path = "/assets/images/cards/card";
 
@@ -6,7 +6,8 @@ const card_image_path = "/assets/images/cards/card";
 @Component({
   selector: 'card-holder',
   templateUrl: './card-holder.component.html',
-  styleUrls: ['./card-holder.component.scss']
+  styleUrls: ['./card-holder.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CardHolderComponent implements OnInit {
 

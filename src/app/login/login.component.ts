@@ -18,10 +18,10 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private configService: ConfigService,
-    private router: Router,
-    private authService: AuthService
+    private _formBuilder: FormBuilder,
+    private _configService: ConfigService,
+    private _router: Router,
+    private _authService: AuthService
   ) { }
 
   invalidUsername() {
@@ -33,14 +33,14 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+    this.loginForm = this._formBuilder.group({
       username: ["", Validators.required],
       password: ["", Validators.required]
     });
-    this.authService.logout();
+    this._authService.logout();
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.processing = true;
     this.submitted = true;
 
@@ -48,35 +48,40 @@ export class LoginComponent implements OnInit {
       this.processing = false;
       return;
     } else {
-      this.configService
-        .getUsers()
-        .then(
-          response => {
-            const user = response.users.find(
-              user => user.username === this.loginForm.get("username").value
-            );
-            if (
-              !user ||
-              user.password !== this.loginForm.get("password").value
-            ) {
+      const username = this.loginForm.get('username').value;
+      const password = this.loginForm.get('password').value;
+      try {
+        const loginInfo = await this._configService.tryLogin(username, password);
+        console.log('loginInfo: ' + loginInfo);
+        if (!loginInfo) {
+          this.networkError = true;
+          setTimeout(() => (this.networkError = false), 1000);
+        } else if (loginInfo.success) {
+          localStorage.setItem('isLoggedIn', "true");
+          localStorage.setItem('token', username);
+          this._router.navigateByUrl('/gameOptions');
+        } else {
+          switch (loginInfo.errorId) {
+            case 'WRONG_USERNAME':
+            case 'WRONG_PASSWORD':
               this.wrongData = true;
               this.submitted = false;
               this.loginForm.reset();
               setTimeout(() => (this.wrongData = false), 1000);
-            } else {
-              localStorage.setItem('isLoggedIn', "true");
-              localStorage.setItem('token', user.username);
-              this.router.navigateByUrl('/gameOptions');
-            }
-          },
-          error => {
-            this.networkError = true;
-            setTimeout(() => (this.networkError = false), 1000);
+              break;
+            case 'DB_ERROR':
+            default:
+              this.networkError = true;
+              setTimeout(() => (this.networkError = false), 1000);
+              break;
           }
-        )
-        .finally(() => {
-          this.processing = false;
-        });
+        }
+      } catch (error) {
+        this.networkError = true;
+        setTimeout(() => (this.networkError = false), 1000);
+      } finally {
+        this.processing = false;
+      }
     }
   }
 }
