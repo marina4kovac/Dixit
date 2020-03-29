@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input, OnDestroy, Injector, Inject } from '@angular/core';
 import { StateManagementService, STATE_MANAGEMENT } from '../utils/state-management.service';
+import { Observable } from 'rxjs';
+import { GameState } from '../models/game-info';
 
 @Component({
   selector: 'waiting-room',
@@ -9,7 +11,7 @@ import { StateManagementService, STATE_MANAGEMENT } from '../utils/state-managem
 })
 export class WaitingRoomComponent implements OnInit, OnDestroy {
 
-  private _stateManagementService: StateManagementService;
+  public _stateManagementService: StateManagementService;
 
   constructor(injector: Injector) {
     this._stateManagementService = injector.get(STATE_MANAGEMENT);
@@ -20,6 +22,12 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // this._stateManagementService.gameInfoChanged.subscribe((value) => {
+    //   if (value.state === GameState.ChoosingWord) {
+    //     console.log('choosing word');
+    //   }
   }
 
 }
+
+

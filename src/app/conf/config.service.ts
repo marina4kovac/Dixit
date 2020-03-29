@@ -28,7 +28,18 @@ export class ConfigService {
   }
 
   public saveGame(gameInfo: GameInfoI): Promise<any> {
-    return this._http.post("api/v1/games/createGame", gameInfo).toPromise();
+    return this._http.post("/api/v1/games/createGame", gameInfo).toPromise();
+  }
+
+  public getActiveGames(): Promise<GameInfoI[]> {
+    return this._http.get("/api/v1/games/getActiveGames").toPromise().then((result: any) => result.activeGames);
+  }
+
+  public joinGame(player: string, gameInfo: GameInfoI): Promise<any> {
+    return this._http.post("/api/v1/games/joinGame", {
+      player,
+      gameInfo
+    }).toPromise();
   }
 
   // public getGameInfo(gameId: any): Observable<GameInfoI> {

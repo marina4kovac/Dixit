@@ -19,7 +19,7 @@ export class SocketService {
     public connect(options: any) {
         this._socket.ioSocket.io.opts.query = { gameId: options.gameId };
         this._socket.connect();
-        this._requests = this._socket.fromEvent<any>('updateRequest').pipe(map(data => data.gameInfo));
+        this._requests = this._socket.fromEvent<any>('updateRequest');
     }
 
     public getMessage() {

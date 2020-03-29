@@ -1,6 +1,6 @@
 import { GameInfoI } from '../models/game-info';
 import { Injectable, InjectionToken, Injector, Inject } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { SocketService, SOCKET_SERVICE } from '../../conf/socket-service.service';
 
 export const STATE_MANAGEMENT = new InjectionToken<StateManagementService>('stateManagement');
@@ -14,7 +14,9 @@ export class StateManagementService {
 
     private _gameInfo: GameInfoI;
 
-    public set gameInfo(value) {
+    public gameInfoChanged: Subject<GameInfoI>;
+
+    public set gameInfo(value: GameInfoI) {
         if (value === this._gameInfo) {
             return;
         } else if (value === undefined) {
@@ -32,14 +34,16 @@ export class StateManagementService {
             return;
         }
         this._gameInfo = value;
+        this.gameInfoChanged.next(this._gameInfo);
     }
 
     public get gameInfo(): GameInfoI {
         return this._gameInfo;
     }
+
     private _getMesssageSubscription: Subscription;
 
-    constructor(private _injector: Injector, @Inject(SOCKET_SERVICE) _socketService: SocketService) {
+    constructor(@Inject(SOCKET_SERVICE) _socketService: SocketService) {
         this._socketService = _socketService;
         this._gameInfo = undefined;
         this._getMesssageSubscription = undefined;

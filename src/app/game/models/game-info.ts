@@ -12,7 +12,7 @@ export interface GameDecksI {
 }
 
 export interface GameInfoI {
-    _id: any;
+    _id: String;
     gameName: string;
     numberOfPlayers: number;
     state: GameState;
