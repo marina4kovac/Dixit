@@ -1,0 +1,9 @@
+<div>
+  <h2>Your hand</h2>
+  <card-deck [cards]="gameInfo.decks.playersDecks[playerNumber]"></card-deck>
+  <choose-word *ngIf="gameInfo.state === 1" [playerNumber]="playerNumber">
+  </choose-word>
+</div>
+<div>
+  <h2>Table</h2>
+</div>

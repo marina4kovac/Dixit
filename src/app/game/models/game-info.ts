@@ -6,9 +6,9 @@ export enum GameState {
 }
 
 export interface GameDecksI {
-    freeDeck: Set<number>;
-    playersDecks: Set<number>[];
-    tableDeck?: Set<number>;
+    freeDeck: number[];
+    playersDecks: Array<number[]>;
+    tableDeck?: number[];
 }
 
 export interface GameInfoI {
@@ -20,4 +20,5 @@ export interface GameInfoI {
     playerChoosing;
     points: number[];
     players: string[];
+    word?: string;
 }

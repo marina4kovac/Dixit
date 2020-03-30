@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GameInfoI } from '../game/models/game-info';
-import { Observable } from 'rxjs';
+import { JsonPipe } from '@angular/common';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,28 +17,35 @@ export class ConfigService {
   }
 
   public getUsers(): Promise<any> {
-    return this._http.get("/api/v1/users").toPromise();
+    return this._http.get('/api/v1/users').toPromise();
   }
 
   public tryLogin(username: string, password: string): Promise<any> {
-    return this._http.post("/api/v1/users/login", {
-      "username": username,
-      "password": password
+    return this._http.post('/api/v1/users/login', {
+      'username': username,
+      'password': password
     }).toPromise();
   }
 
   public saveGame(gameInfo: GameInfoI): Promise<any> {
-    return this._http.post("/api/v1/games/createGame", gameInfo).toPromise();
+    return this._http.post('/api/v1/games/createGame', gameInfo).toPromise();
   }
 
   public getActiveGames(): Promise<GameInfoI[]> {
-    return this._http.get("/api/v1/games/getActiveGames").toPromise().then((result: any) => result.activeGames);
+    return this._http.get('/api/v1/games/getActiveGames').toPromise().then((result: any) => result.activeGames);
   }
 
   public joinGame(player: string, gameInfo: GameInfoI): Promise<any> {
-    return this._http.post("/api/v1/games/joinGame", {
+    return this._http.post('/api/v1/games/joinGame', {
       player,
       gameInfo
+    }).toPromise();
+  }
+
+  public chooseWord(gameId: String, word: string): Promise<any> {
+    return this._http.post('/api/v1/games/chooseWord', {
+      gameId,
+      word
     }).toPromise();
   }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigService } from 'src/app/conf/config.service';
 import { GameInfoI } from '../models/game-info';
+import { SessionDataService } from 'src/app/conf/session-data.service';
 
 @Component({
   selector: 'app-choose-game-dialog',
@@ -14,7 +15,7 @@ export class ChooseGameDialogComponent implements OnInit {
 
   public activeGames: GameInfoI[];
 
-  constructor(private _activeModal: NgbActiveModal, private configService: ConfigService) {
+  constructor(private _activeModal: NgbActiveModal, private _configService: ConfigService, private _sessionDataService: SessionDataService) {
   }
 
   ngOnInit() {
@@ -23,7 +24,7 @@ export class ChooseGameDialogComponent implements OnInit {
 
   public async fetchActiveGames(): Promise<void> {
     try {
-      this.activeGames = await this.configService.getActiveGames();
+      this.activeGames = await this._configService.getActiveGames();
     } catch (err) {
       this.fetchActiveGames();
     }
@@ -31,11 +32,7 @@ export class ChooseGameDialogComponent implements OnInit {
 
   public async tryWaitingRoom(game: GameInfoI): Promise<void> {
     try {
-      // let gameInfo: GameInfoI;
-      // Object.assign(gameInfo, game);
-
-
-      let result: any = await this.configService.joinGame(localStorage.getItem('token'), game);
+      let result: any = await this._configService.joinGame(this._sessionDataService.username, game);
       if (!result || !result.success) {
         throw 0;
       }

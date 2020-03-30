@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ConfigService } from "../conf/config.service";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ConfigService } from '../conf/config.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../guards/auth.service';
+import { SessionDataService } from '../conf/session-data.service';
 
 @Component({
-  selector: "login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+  selector: 'login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _configService: ConfigService,
     private _router: Router,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _sessionDataService: SessionDataService
   ) { }
 
   invalidUsername() {
@@ -34,8 +36,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this._formBuilder.group({
-      username: ["", Validators.required],
-      password: ["", Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
     this._authService.logout();
   }
@@ -52,13 +54,11 @@ export class LoginComponent implements OnInit {
       const password = this.loginForm.get('password').value;
       try {
         const loginInfo = await this._configService.tryLogin(username, password);
-        console.log('loginInfo: ' + loginInfo);
         if (!loginInfo) {
           this.networkError = true;
           setTimeout(() => (this.networkError = false), 1000);
         } else if (loginInfo.success) {
-          localStorage.setItem('isLoggedIn', "true");
-          localStorage.setItem('token', username);
+          this._sessionDataService.username = username;
           this._router.navigateByUrl('/gameOptions');
         } else {
           switch (loginInfo.errorId) {

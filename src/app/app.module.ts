@@ -9,7 +9,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfigService } from './conf/config.service';
 import { API_URL, ApiUrlInterceptorService } from './conf/api-url-interceptor.service';
 import { environment } from '../environments/environment';
-import { CreateGameComponent } from './game/create-game/create-game.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { GameOptionsComponent } from './game/game-options/game-options.component';
@@ -18,8 +17,12 @@ import { WaitingRoomComponent } from './game/waiting-room/waiting-room.component
 import { ChooseGameDialogComponent } from './game/choose-game-dialog/choose-game-dialog.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { SocketService, SOCKET_SERVICE } from './conf/socket-service.service';
-import { StateManagementService, STATE_MANAGEMENT } from './game/utils/state-management.service';
+import { CommonModule } from '@angular/common';
+import { CreateGameDialogComponent } from './game/create-game-dialog/create-game-dialog.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SessionDataService } from './conf/session-data.service';
+import { ChooseWordComponent } from './game/gameplay/choose-word/choose-word.component';
+import { GameTableComponent } from './game/gameplay/game-table/game-table.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: { autoConnect: false } };
 
@@ -28,27 +31,30 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: { autoCo
     AppComponent,
     CardHolderComponent,
     CardDeckComponent,
-    CreateGameComponent,
     LoginComponent,
     GameOptionsComponent,
     WaitingRoomComponent,
-    ChooseGameDialogComponent
+    ChooseGameDialogComponent,
+    CreateGameDialogComponent,
+    ChooseWordComponent,
+    GameTableComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    NgbModule
   ],
   providers: [
     ConfigService,
     { provide: API_URL, useValue: environment.apiUrl },
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptorService, multi: true, deps: [API_URL] },
-    AuthGuard,
-    { provide: SOCKET_SERVICE, useClass: SocketService },
-    { provide: STATE_MANAGEMENT, useClass: StateManagementService }
+    SessionDataService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

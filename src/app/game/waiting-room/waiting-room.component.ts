@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, Input, OnDestroy, Injector, Inject } from '@angular/core';
-import { StateManagementService, STATE_MANAGEMENT } from '../utils/state-management.service';
-import { Observable } from 'rxjs';
-import { GameState } from '../models/game-info';
+import { Component, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { SessionDataService } from 'src/app/conf/session-data.service';
+import { Subscription } from 'rxjs';
+import { GameInfoI, GameState } from '../models/game-info';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'waiting-room',
@@ -9,23 +10,30 @@ import { GameState } from '../models/game-info';
   styleUrls: ['./waiting-room.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WaitingRoomComponent implements OnInit, OnDestroy {
+export class WaitingRoomComponent implements OnDestroy {
 
-  public _stateManagementService: StateManagementService;
-
-  constructor(injector: Injector) {
-    this._stateManagementService = injector.get(STATE_MANAGEMENT);
+  public get gameInfo() {
+    return this._gameInfo;
   }
 
-  ngOnDestroy(): void {
-    this._stateManagementService.destroy();
+  private _gameInfo: GameInfoI;
+  private _gameInfoSubscription: Subscription;
+
+  constructor(private _router: Router, private _sessionDataService: SessionDataService) {
+    this._gameInfo = this._sessionDataService.stateManagement.gameInfo;
+    if (this._gameInfo.state !== GameState.Waiting) {
+      this._router.navigateByUrl('/gameplay');
+    }
+    this._gameInfoSubscription = this._sessionDataService.stateManagement.gameInfoSubject.subscribe(gameInfo => {
+      this._gameInfo = gameInfo;
+      if (gameInfo.state !== GameState.Waiting) {
+        this._router.navigateByUrl('/gameplay');
+      }
+    });
   }
 
-  ngOnInit(): void {
-    // this._stateManagementService.gameInfoChanged.subscribe((value) => {
-    //   if (value.state === GameState.ChoosingWord) {
-    //     console.log('choosing word');
-    //   }
+  ngOnDestroy() {
+    this._gameInfoSubscription.unsubscribe();
   }
 
 }

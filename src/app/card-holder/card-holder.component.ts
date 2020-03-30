@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 
-const card_image_path = "/assets/images/cards/card";
+const card_image_path = '/assets/images/cards/card';
 
 
 @Component({
@@ -14,14 +14,14 @@ export class CardHolderComponent implements OnInit {
   private _cardId: number;
 
   @Input('cardId')
-  set cardId(value: number){
-    if(this._cardId !== value){
+  set cardId(value: number) {
+    if (this._cardId !== value) {
       this._cardId = value;
       this.cardSource = `${card_image_path}${this._cardId}.jpg`;
     }
   }
 
-  get cardId(){
+  get cardId() {
     return this._cardId;
   }
 

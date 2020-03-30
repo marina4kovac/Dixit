@@ -17,6 +17,22 @@
   }
 }
 
+.modal {
+  top: 10vh;
+
+  .modal-dialog {
+    margin: auto;
+
+    .error-msg-left {
+      flex-grow: 1;
+
+      p {
+        margin: unset;
+      }
+    }
+  }
+}
+
 html,
 body,
 .container-fluid {

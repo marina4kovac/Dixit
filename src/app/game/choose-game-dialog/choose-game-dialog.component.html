@@ -1,32 +1,19 @@
-<!-- <div class="modal" style="display: block;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" aria-hidden="true">&times;</button>
-          <h3>tesxt</h3>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choose game</h5>
+        <button type="button" (click)="fetchActiveGames()">ref</button>
+      </div>
+      <div class="modal-body">
+        <div class="list-group" *ngIf="activeGames">
+          <button (click)="tryWaitingRoom(game)" class="list-group-item list-group-item-action"
+            [ngClass]="{'list-group-item-dark': (i % 2), 'list-group-item-secondary': !(i % 2)}"
+            *ngFor="let game of activeGames; let i = index">{{game._id}}: {{game.gameName}}</button>
         </div>
-        <div class="modal-body">Body</div>
-        <div class="modal-footer">Footer</div>
       </div>
-    </div>
-  </div> -->
-
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title">Choose game</h5>
-      <button type="button" (click)="fetchActiveGames()">ref</button>
-    </div>
-    <div class="modal-body">
-      <div class="list-group" *ngIf="activeGames">
-        <button (click)="tryWaitingRoom(game)" class="list-group-item list-group-item-action"
-          [ngClass]="{'list-group-item-dark': (i % 2), 'list-group-item-secondary': !(i % 2)}"
-          *ngFor="let game of activeGames; let i = index">{{game._id}}: {{game.gameName}}</button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onClose()">Save changes</button>
+        <button type="button" class="btn btn-secondary" (click)="onClose()">Close</button>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="onClose()">Save changes</button>
-      <button type="button" class="btn btn-secondary" (click)="onClose()">Close</button>
     </div>
   </div>
-</div>

@@ -13,7 +13,7 @@ export class GameGeneratorService {
 
   constructor(private _configService: ConfigService) { }
 
-  public createGame(gameName: string, numberOfPlayers: number): Promise<GameInfoI> {
+  public createGame(gameName: string, creator: string, numberOfPlayers: number): Promise<GameInfoI> {
     let gameInfo: GameInfoI = {
       _id: undefined,
       gameName,
@@ -22,7 +22,7 @@ export class GameGeneratorService {
       decks: this.createGameDecks(numberOfPlayers),
       playerChoosing: 0,
       points: Array(numberOfPlayers).fill(0),
-      players: [localStorage.getItem('token')]
+      players: [creator]
     };
 
     return this._configService.saveGame(gameInfo).then(result => {
@@ -39,31 +39,31 @@ export class GameGeneratorService {
     let freeCards = [...Array(totalNumberOfCards).keys()];
 
 
-    let players_decks: Set<number>[] = [];
+    let players_decks: Array<number[]> = [];
 
     for (let i = 0; i < numberOfPlayers; i++) {
-      let deck = new Set<number>();
+      let deck = [];
       for (let card = 0; card < cardsPerPlayer; card++) {
         let random_cardId = Math.floor(Math.random() * (freeCards.length + 1));
-        deck.add(freeCards[random_cardId]);
+        deck.push(freeCards[random_cardId]);
         freeCards.splice(random_cardId, 1);
       }
       players_decks.push(deck);
     }
 
     return {
-      freeDeck: new Set(freeCards),
+      freeDeck: freeCards,
       playersDecks: players_decks,
-      tableDeck: new Set()
+      tableDeck: []
     };
   }
 
-  public drawCard(game: GameDecksI, player: number): void {
-    let free_deck: Array<number> = [...game.freeDeck];
-    const random_card = Math.floor(Math.random() * (free_deck.length + 1));
-    free_deck.splice(random_card, 1);
-    game.playersDecks[player].add(random_card);
-    game.freeDeck = new Set(free_deck);
-  }
+  // public drawCard(game: GameDecksI, player: number): void {
+  //   let free_deck: Array<number> = [...game.freeDeck];
+  //   const random_card = Math.floor(Math.random() * (free_deck.length + 1));
+  //   free_deck.splice(random_card, 1);
+  //   game.playersDecks[player].add(random_card);
+  //   game.freeDeck = new Set(free_deck);
+  // }
 
 }

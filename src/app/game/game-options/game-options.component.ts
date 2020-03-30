@@ -1,29 +1,40 @@
-import { Component, OnInit, ViewEncapsulation, Injector, Inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChooseGameDialogComponent } from '../choose-game-dialog/choose-game-dialog.component';
-import { SocketService, SOCKET_SERVICE } from 'src/app/conf/socket-service.service';
-import { StateManagementService, STATE_MANAGEMENT } from '../utils/state-management.service';
+import { CreateGameDialogComponent } from '../create-game-dialog/create-game-dialog.component';
+import { SessionDataService } from 'src/app/conf/session-data.service';
+import { StateManagement } from '../utils/state-management';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'game-options',
   templateUrl: './game-options.component.html',
   styleUrls: ['./game-options.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [NgbModal],
-  entryComponents: [ChooseGameDialogComponent]
+  entryComponents: [ChooseGameDialogComponent, CreateGameDialogComponent]
 })
 export class GameOptionsComponent implements OnInit {
 
-  constructor(private _injector: Injector, private _router: Router, private _modalService: NgbModal, @Inject(STATE_MANAGEMENT) private _stateManagementService: StateManagementService) {
+  constructor(private _injector: Injector, private _router: Router,
+    private _modalService: NgbModal,
+    private _sessionDataService: SessionDataService,
+    private _socket: Socket) {
 
   }
 
   ngOnInit(): void {
   }
 
-  public gotoCreateGame() {
-    this._router.navigateByUrl('/createGame');
+  public openCreateGameDialog() {
+    this._modalService.open(CreateGameDialogComponent, {
+      injector: this._injector
+    }).result.then(value => {
+      if (value) {
+        this._sessionDataService.stateManagement = new StateManagement(this._socket, value);
+        this._router.navigateByUrl('/waitingRoom');
+      }
+    });
   }
 
   public openJoinGameDialog() {
@@ -32,7 +43,7 @@ export class GameOptionsComponent implements OnInit {
         injector: this._injector
       }).result.then(value => {
         if (value) {
-          this._stateManagementService.gameInfo = value;
+          this._sessionDataService.stateManagement = new StateManagement(this._socket, value);
           this._router.navigateByUrl('/waitingRoom');
         }
       });
