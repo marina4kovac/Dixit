@@ -21,20 +21,32 @@ export class StateManagement implements OnDestroy {
 
     private _getMesssageSubscription: Subscription;
 
-    constructor(private _socket: Socket, private _gameInfo: GameInfoI) {
+    constructor(private _socket: Socket, private _gameInfo: GameInfoI, private _player) {
+        this.reconnect();
+    }
+
+    public reconnect() {
         this.gameInfoSubject = new Subject();
-        this._socketService = new SocketHandling(this._socket, this._gameInfo._id);
-        this._getMesssageSubscription = this._socketService.getMessage()
+        this._socketService = new SocketHandling(this._socket, this._gameInfo._id, this._player);
+        this._getMesssageSubscription = this._socketService.getMessages()
             .subscribe(
                 gameInfo => {
-                    this._gameInfo = gameInfo;
+                    this._gameInfo = gameInfo as GameInfoI;
                     this.gameInfoSubject.next(this._gameInfo);
                 }
             );;
     }
 
+    public get socket() {
+        return this._socket;
+    }
+
     ngOnDestroy() {
-        this._getMesssageSubscription.unsubscribe();
-        this._socketService.disconnect();
+        if (this._getMesssageSubscription) {
+            this._getMesssageSubscription.unsubscribe();
+        }
+        if (this._socketService) {
+            this._socketService.disconnect();
+        }
     }
 }

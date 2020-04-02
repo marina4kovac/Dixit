@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GameInfoI } from '../game/models/game-info';
 import { JsonPipe } from '@angular/common';
+import { Socket } from 'ngx-socket-io';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -42,11 +43,36 @@ export class ConfigService {
     }).toPromise();
   }
 
-  public chooseWord(gameId: String, word: string): Promise<any> {
+  public chooseWord(gameId: String, word: string, socket: Socket): Promise<any> {
     return this._http.post('/api/v1/games/chooseWord', {
       gameId,
       word
-    }).toPromise();
+    }).toPromise().then(result => {
+      socket.emit('updated', gameId);
+      return result;
+    });;
+  }
+
+  public playCard(gameId: String, player: number, card: number, socket: Socket): Promise<any> {
+    return this._http.post('/api/v1/games/playCard', {
+      gameId,
+      player,
+      card
+    }).toPromise().then(result => {
+      socket.emit('updated', gameId);
+      return result;
+    });;
+  }
+
+  public guessCard(gameId: String, player: string, card: number, socket: Socket): Promise<any> {
+    return this._http.post('/api/v1/games/guessCard', {
+      gameId,
+      player,
+      card
+    }).toPromise().then(result => {
+      socket.emit('updated', gameId);
+      return result;
+    });
   }
 
   // public getGameInfo(gameId: any): Observable<GameInfoI> {

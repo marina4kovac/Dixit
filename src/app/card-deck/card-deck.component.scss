@@ -1,6 +1,18 @@
-.card-deck{
-    card-holder{
-        padding: 4px 2px;
-        display: inline-flex;
-    }
+.card-deck {
+
+  card-holder {
+    padding: 4px 2px;
+    display: inline-flex;
+  }
+
+  span {
+    cursor: pointer;
+
+  }
+}
+
+.card-deck.no-click {
+  span {
+    pointer-events: none;
+  }
 }

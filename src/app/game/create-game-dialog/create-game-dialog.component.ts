@@ -36,7 +36,7 @@ export class CreateGameDialogComponent implements OnInit {
   ngOnInit() {
     this.gameForm = this._formBuilder.group({
       game_name: ['', Validators.required],
-      number_of_players: ['', [Validators.required, Validators.pattern('^[4-6]?$')]]
+      number_of_players: ['', [Validators.required, Validators.pattern('^[2-6]?$')]]
     });
   }
 

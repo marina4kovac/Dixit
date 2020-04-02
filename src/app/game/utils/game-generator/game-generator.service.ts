@@ -36,7 +36,7 @@ export class GameGeneratorService {
 
   public createGameDecks(numberOfPlayers: number): GameDecksI {
 
-    let freeCards = [...Array(totalNumberOfCards).keys()];
+    let freeCards = [...Array<number>(totalNumberOfCards + 1).keys()].slice(1);
 
 
     let players_decks: Array<number[]> = [];
@@ -44,7 +44,11 @@ export class GameGeneratorService {
     for (let i = 0; i < numberOfPlayers; i++) {
       let deck = [];
       for (let card = 0; card < cardsPerPlayer; card++) {
-        let random_cardId = Math.floor(Math.random() * (freeCards.length + 1));
+        let seed: number = Math.random();
+        let random_cardId = Math.floor(seed * freeCards.length);
+        if (!freeCards[random_cardId]) {
+          alert(`card error: floor ${seed}*${freeCards.length}===${random_cardId}`);
+        }
         deck.push(freeCards[random_cardId]);
         freeCards.splice(random_cardId, 1);
       }

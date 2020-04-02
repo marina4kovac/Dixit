@@ -23,8 +23,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SessionDataService } from './conf/session-data.service';
 import { ChooseWordComponent } from './game/gameplay/choose-word/choose-word.component';
 import { GameTableComponent } from './game/gameplay/game-table/game-table.component';
+import { PlayCardComponent } from './game/gameplay/play-card/play-card.component';
+import { TableDeckComponent } from './game/gameplay/table-deck/table-deck.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: { autoConnect: false } };
+const config: SocketIoConfig = { url: '192.168.0.28:3000', options: { autoConnect: false } };
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: { autoCo
     ChooseGameDialogComponent,
     CreateGameDialogComponent,
     ChooseWordComponent,
-    GameTableComponent
+    GameTableComponent,
+    PlayCardComponent,
+    TableDeckComponent
   ],
   imports: [
     CommonModule,

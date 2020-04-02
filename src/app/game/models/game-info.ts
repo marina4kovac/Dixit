@@ -2,13 +2,14 @@ export enum GameState {
     Waiting,
     ChoosingWord,
     PlayingCards,
-    Guessing
+    Guessing,
+    Results
 }
 
 export interface GameDecksI {
     freeDeck: number[];
     playersDecks: Array<number[]>;
-    tableDeck?: number[];
+    tableDeck?: any[];
 }
 
 export interface GameInfoI {
@@ -17,7 +18,7 @@ export interface GameInfoI {
     numberOfPlayers: number;
     state: GameState;
     decks: GameDecksI;
-    playerChoosing;
+    playerChoosing: number;
     points: number[];
     players: string[];
     word?: string;

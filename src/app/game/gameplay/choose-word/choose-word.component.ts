@@ -4,6 +4,7 @@ import { GameInfoI } from '../../models/game-info';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfigService } from 'src/app/conf/config.service';
+import { GameGeneratorService } from '../../utils/game-generator/game-generator.service';
 
 @Component({
   selector: 'choose-word',
@@ -11,31 +12,27 @@ import { ConfigService } from 'src/app/conf/config.service';
   styles: [],
   encapsulation: ViewEncapsulation.None
 })
-export class ChooseWordComponent implements OnInit, OnDestroy {
+export class ChooseWordComponent implements OnInit {
   submitted = false;
   processing = false;
   message: string;
   choosingWordForm: FormGroup;
 
   @Input('playerNumber') private _playerNumber: number;
-
-  private _gameInfo: GameInfoI;
-  private _gameInfoSubscription: Subscription;
+  @Input('gameInfo') gameInfo: GameInfoI;
 
   constructor(private _formBuilder: FormBuilder, private _sessionDataService: SessionDataService, private _configService: ConfigService) {
-    this._gameInfo = this._sessionDataService.stateManagement.gameInfo;
+    this.gameInfo = this._sessionDataService.stateManagement.gameInfo;
   }
 
   ngOnInit() {
-    this._gameInfoSubscription = this._sessionDataService.stateManagement.gameInfoSubject.subscribe(gameInfo =>
-      this._gameInfo = gameInfo);
     this.choosingWordForm = this._formBuilder.group({
       word: ['', [Validators.required, Validators.pattern('^[a-zA-Z\d]+$')]]
     });
   }
 
   public isChoosing(): boolean {
-    return this._playerNumber === this._gameInfo.playerChoosing;
+    return this._playerNumber === this.gameInfo.playerChoosing;
   }
 
   public invalidWord(): boolean {
@@ -52,7 +49,7 @@ export class ChooseWordComponent implements OnInit, OnDestroy {
     }
     else {
       try {
-        let gameInfo: GameInfoI = await this._configService.chooseWord(this._gameInfo._id, this.choosingWordForm.get('word').value);
+        let gameInfo: GameInfoI = await this._configService.chooseWord(this.gameInfo._id, this.choosingWordForm.get('word').value, this._sessionDataService.stateManagement.socket);
         if (!gameInfo) {
           throw 0;
         }
@@ -65,10 +62,5 @@ export class ChooseWordComponent implements OnInit, OnDestroy {
         this.processing = false;
       }
     }
-  }
-
-
-  ngOnDestroy() {
-    this._gameInfoSubscription.unsubscribe();
   }
 }

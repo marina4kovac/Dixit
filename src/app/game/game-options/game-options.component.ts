@@ -31,7 +31,7 @@ export class GameOptionsComponent implements OnInit {
       injector: this._injector
     }).result.then(value => {
       if (value) {
-        this._sessionDataService.stateManagement = new StateManagement(this._socket, value);
+        this._sessionDataService.stateManagement = new StateManagement(this._socket, value, this._sessionDataService.username);
         this._router.navigateByUrl('/waitingRoom');
       }
     });
@@ -43,7 +43,7 @@ export class GameOptionsComponent implements OnInit {
         injector: this._injector
       }).result.then(value => {
         if (value) {
-          this._sessionDataService.stateManagement = new StateManagement(this._socket, value);
+          this._sessionDataService.stateManagement = new StateManagement(this._socket, value, this._sessionDataService.username);
           this._router.navigateByUrl('/waitingRoom');
         }
       });

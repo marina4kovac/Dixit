@@ -24,6 +24,7 @@ export class GameTableComponent implements OnInit, OnDestroy {
   }
 
   constructor(private _sessionDataService: SessionDataService) {
+    // this._sessionDataService.stateManagement.reconnect();
     this._gameInfo = this._sessionDataService.stateManagement.gameInfo;
     this._playerNumber = this._gameInfo.players.indexOf(this._sessionDataService.username);
   }
@@ -36,5 +37,9 @@ export class GameTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._gameInfoSubscription.unsubscribe();
+  }
+
+  public get tableDeck(): string {
+    return JSON.stringify(this._gameInfo.decks.tableDeck);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'card-deck',
@@ -8,26 +8,36 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 })
 export class CardDeckComponent implements OnInit {
 
-  private _cards: Set<number>;
+  public cardBack: number = 0;
+
+  private _cards: number[];
 
   public addCard(random_card: number) {
-    this._cards.add(random_card);
+    this._cards.push(random_card);
   }
 
-  @Input() set cards(value: Set<number>) {
+  @Input() set cards(value: number[]) {
     if (value != this._cards) {
       this._cards = value;
     }
   }
 
-  get cards() {
+  getCards(): number[] {
     return this._cards;
   }
+
+  @Input('faceUp') faceUp: boolean;
+  @Input('canClick') canClick: boolean;
+  @Output() cardChosen = new EventEmitter();
 
   constructor() {
   }
 
   ngOnInit(): void {
+  }
+
+  public chooseCard($event) {
+    this.cardChosen.emit($event);
   }
 
 }
