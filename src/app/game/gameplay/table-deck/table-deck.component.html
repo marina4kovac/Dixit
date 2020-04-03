@@ -1,5 +1,2 @@
-<h2>Table</h2>
 <card-deck [cards]="deck" [faceUp]="faceUp()" [canClick]="canClick()" (cardChosen)="guessCard($event)"></card-deck>
-<div *ngIf="displayResults">
-  <span *ngFor="let result of results">{{result}}</span>
-</div>
+<card-holder class="ai-chosen-card" *ngIf="playedCard !== undefined" [cardId]="playedCard"></card-holder>

@@ -39,7 +39,13 @@ export class GameTableComponent implements OnInit, OnDestroy {
     this._gameInfoSubscription.unsubscribe();
   }
 
-  public get tableDeck(): string {
-    return JSON.stringify(this._gameInfo.decks.tableDeck);
+  public get playedCard(): number {
+    if (!this._gameInfo.decks.tableDeck)
+      return undefined;
+    let played = this._gameInfo.decks.tableDeck.find(elem => elem.player === this.playerNumber);
+    if (!played) {
+      return undefined;
+    }
+    return played.card;
   }
 }

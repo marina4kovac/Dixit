@@ -1,7 +1,10 @@
+<div *ngIf="gameInfo.state !== 1">
+  <h2>Word: {{gameInfo.word}}</h2>
+</div>
 <form *ngIf="isChoosing()" [formGroup]="choosingWordForm" (ngSubmit)="chooseWord()">
 
-  <div class="form-group" [ngClass]="{ 'has-error': invalidWord() }">
-    <label for="word" class="control-label">Game name:</label>
+  <div class="form-group" [ngClass]="{ 'has-error': invalidWord() }" [ngStyle]="{'padding-bottom': 0}">
+    <label for="word" class="control-label">Choose word:</label>
     <input type="text" formControlName="word" class="form-control" id="word" name="word">
     <p *ngIf="invalidWord()" id="word_error" class="help-block">Invalid word.</p>
   </div>

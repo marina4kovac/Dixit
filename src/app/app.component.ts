@@ -10,12 +10,10 @@ import { AuthService } from './guards/auth.service';
 export class AppComponent implements OnDestroy {
 
 
-  constructor(private _configService: ConfigService, private _authService: AuthService) {
-    this._configService.getUsers().then((res) => { console.log('success'); }, (error) => { console.log('error'); });
+  constructor(private _authService: AuthService) {
   }
 
   ngOnDestroy() {
-    console.log('app component destroyed');
     this._authService.logout();
   }
 }

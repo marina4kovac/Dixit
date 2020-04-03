@@ -1,0 +1,16 @@
+table-deck {
+  position: fixed;
+  background-color: saddlebrown;
+  width: 100%;
+  left: 0;
+  top: 30px;
+  display: flex;
+  height: 270px;
+  justify-content: center;
+  align-items: center;
+
+  card-holder.ai-chosen-card {
+    position: fixed;
+    right: 10px;
+  }
+}

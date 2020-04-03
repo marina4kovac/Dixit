@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
 import { SessionDataService } from 'src/app/conf/session-data.service';
-import { GameInfoI } from '../../models/game-info';
+import { GameInfoI, GameState } from '../../models/game-info';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfigService } from 'src/app/conf/config.service';
@@ -9,7 +9,7 @@ import { GameGeneratorService } from '../../utils/game-generator/game-generator.
 @Component({
   selector: 'choose-word',
   templateUrl: './choose-word.component.html',
-  styles: [],
+  styleUrls: ['./choose-word.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ChooseWordComponent implements OnInit {
@@ -32,7 +32,7 @@ export class ChooseWordComponent implements OnInit {
   }
 
   public isChoosing(): boolean {
-    return this._playerNumber === this.gameInfo.playerChoosing;
+    return this.gameInfo.state === GameState.ChoosingWord && this._playerNumber === this.gameInfo.playerChoosing;
   }
 
   public invalidWord(): boolean {

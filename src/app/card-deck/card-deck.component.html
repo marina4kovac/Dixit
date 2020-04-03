@@ -1,4 +1,4 @@
-<div class="card-deck" [ngClass]="{'no-click': !canClick}">
+<div class="ai-card-deck" [ngClass]="{'no-click': !canClick}">
   <span *ngFor="let card of getCards()">
     <button (click)="chooseCard(card)">
       <card-holder [cardId]="faceUp ? card : cardBack"></card-holder>

@@ -1,0 +1,14 @@
+play-card {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 270px;
+
+  .ai-hands {
+    font-size: 130px;
+  }
+}

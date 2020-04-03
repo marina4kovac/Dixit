@@ -1,8 +1,5 @@
 <div>
-  <div *ngIf="gameInfo.state !== 1">
-    <h2>Word: {{gameInfo.word}}</h2>
-  </div>
-  <table-deck [playerNumber]="playerNumber"></table-deck>
+  <table-deck [playerNumber]="playerNumber" [playedCard]="playedCard"></table-deck>
   <play-card [playerNumber]="playerNumber"></play-card>
-  <choose-word *ngIf="gameInfo.state === 1" [gameInfo]="gameInfo" [playerNumber]="playerNumber"></choose-word>
+  <choose-word [gameInfo]="gameInfo" [playerNumber]="playerNumber"></choose-word>
 </div>
