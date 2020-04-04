@@ -19,7 +19,8 @@ export class ResultsDialogComponent implements OnInit {
       return {
         card: elem.card,
         player: this._players[elem.player],
-        guesses: elem.guesses
+        guesses: elem.guesses,
+        points: this.points[elem.player]
       }
     });
   }
@@ -42,8 +43,8 @@ export class ResultsDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public isPlayerChoosing(i: number): boolean {
-    return i === this._sessionDataService.stateManagement.gameInfo.playerChoosing;
+  public isPlayerChoosing(player: string): boolean {
+    return player === this._players[this._sessionDataService.stateManagement.gameInfo.playerChoosing];
   }
 
   public canClick(): boolean {

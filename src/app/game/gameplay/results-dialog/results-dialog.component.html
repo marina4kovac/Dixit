@@ -3,9 +3,10 @@
 </div>
 <div class="modal-body">
   <div>
-    <div *ngFor="let result of results; let i = index" class="result-card">
+    <div *ngFor="let result of results" class="result-card">
       <card-holder [cardId]="result.card"></card-holder>
-      <div class="results-person" [ngClass]="{'bold':isPlayerChoosing(i)}">{{result.player}}[+{{points[i]}}]
+      <div class="results-person" [ngClass]="{'bold':isPlayerChoosing(result.player)}">{{result.player}}
+        [+{{result.points}}]
       </div>
       <ul>
         <li *ngFor="let guess of result.guesses">{{guess}}</li>
@@ -14,5 +15,6 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button [disabled]="!canClick()" type="button" class="btn btn-primary" (click)="onClose()">Next</button>
+  <button *ngIf="canClick()" type="button" class="btn btn-primary" (click)="onClose()">Next</button>
+  <i *ngIf="!canClick()" class="fa fa-spinner fa-spin icon"></i>
 </div>

@@ -1,0 +1,21 @@
+.game-status-container {
+  position: relative;
+
+  .game-status-deck-size {
+    left: 0;
+    position: absolute;
+  }
+
+  .game-status-results {
+    right: 0;
+    position: absolute;
+  }
+
+  .game-status-player {
+    padding: 0 5px;
+
+    &.bold {
+      font-weight: bold;
+    }
+  }
+}

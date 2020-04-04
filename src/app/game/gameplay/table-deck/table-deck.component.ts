@@ -12,23 +12,21 @@ import { ConfigService } from 'src/app/conf/config.service';
   encapsulation: ViewEncapsulation.None
 })
 export class TableDeckComponent implements OnInit {
-  // private _deck: number[];
   private _guessedCard: number;
+  private _playedCard: number;
 
   @Input('playerNumber') playerNumber: number;
-  @Input('playedCard') playedCard: number;
-
-  // public get tableDeck(): number[] {
-  //   let tmp = this.deck;
-  //   if (!tmp) {
-  //     return [];
-  //   }
-  //   let position = tmp.indexOf(this.playedCard);
-  //   if (position < 0)
-  //     return [];
-  //   tmp.splice(position, 1);
-  //   return tmp;
-  // }
+  @Input('playedCard') set playedCard(card: number) {
+    if (card !== this._playedCard) {
+      this._playedCard = card;
+      if (card === undefined) {
+        this._guessedCard = undefined;
+      }
+    }
+  }
+  get playedCard(): number {
+    return this._playedCard;
+  }
 
   public get deck(): number[] {
     return this._sessionDataService.stateManagement.gameInfo.decks.tableDeck.map(elem => elem.card).filter(elem => elem != this.playedCard);
