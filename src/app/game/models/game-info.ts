@@ -3,7 +3,8 @@ export enum GameState {
     ChoosingWord,
     PlayingCards,
     Guessing,
-    Results
+    Results,
+    End
 }
 
 export interface GameDecksI {
@@ -20,6 +21,7 @@ export interface GameInfoI {
     decks: GameDecksI;
     playerChoosing: number;
     points: number[];
+    prevPoints?: number[];
     players: string[];
     word?: string;
 }

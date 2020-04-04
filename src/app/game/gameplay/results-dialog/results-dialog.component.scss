@@ -1,0 +1,24 @@
+.results-modal-dialog {
+  max-width: fit-content;
+  height: fit-content;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &.modal .modal-dialog {
+    max-width: unset;
+  }
+
+  .result-card {
+    display: inline-block;
+    vertical-align: top;
+    padding: 3px;
+
+    .results-person {
+      padding-left: 3px;
+
+      &.bold {
+        font-weight: bold;
+      }
+    }
+  }
+}

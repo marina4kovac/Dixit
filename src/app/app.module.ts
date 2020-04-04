@@ -25,8 +25,9 @@ import { ChooseWordComponent } from './game/gameplay/choose-word/choose-word.com
 import { GameTableComponent } from './game/gameplay/game-table/game-table.component';
 import { PlayCardComponent } from './game/gameplay/play-card/play-card.component';
 import { TableDeckComponent } from './game/gameplay/table-deck/table-deck.component';
+import { ResultsDialogComponent } from './game/gameplay/results-dialog/results-dialog.component';
 
-const config: SocketIoConfig = { url: '192.168.0.28:3000', options: { autoConnect: false } };
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: { autoConnect: false } };
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ const config: SocketIoConfig = { url: '192.168.0.28:3000', options: { autoConnec
     ChooseWordComponent,
     GameTableComponent,
     PlayCardComponent,
-    TableDeckComponent
+    TableDeckComponent,
+    ResultsDialogComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h5 class="modal-title">Results</h5>
+</div>
+<div class="modal-body">
+  <div>
+    <div *ngFor="let result of results; let i = index" class="result-card">
+      <card-holder [cardId]="result.card"></card-holder>
+      <div class="results-person" [ngClass]="{'bold':isPlayerChoosing(i)}">{{result.player}}[+{{points[i]}}]
+      </div>
+      <ul>
+        <li *ngFor="let guess of result.guesses">{{guess}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button [disabled]="!canClick()" type="button" class="btn btn-primary" (click)="onClose()">Next</button>
+</div>

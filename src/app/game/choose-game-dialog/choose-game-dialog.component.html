@@ -2,7 +2,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Choose game</h5>
-        <button type="button" (click)="fetchActiveGames()">ref</button>
+        <i class="fa fa-refresh" (click)="fetchActiveGames()"></i>
       </div>
       <div class="modal-body">
         <div class="list-group" *ngIf="activeGames">
@@ -12,7 +12,6 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="onClose()">Save changes</button>
         <button type="button" class="btn btn-secondary" (click)="onClose()">Close</button>
       </div>
     </div>

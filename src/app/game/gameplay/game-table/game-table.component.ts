@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, Injector } from '@angular/core';
 import { SessionDataService } from 'src/app/conf/session-data.service';
 import { Subscription } from 'rxjs';
-import { GameInfoI } from '../../models/game-info';
+import { GameInfoI, GameState } from '../../models/game-info';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ResultsDialogComponent } from '../results-dialog/results-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'game-table',
@@ -23,7 +26,7 @@ export class GameTableComponent implements OnInit, OnDestroy {
     return this._playerNumber;
   }
 
-  constructor(private _sessionDataService: SessionDataService) {
+  constructor(private _sessionDataService: SessionDataService, private _injector: Injector, private _modalService: NgbModal, private _router: Router) {
     // this._sessionDataService.stateManagement.reconnect();
     this._gameInfo = this._sessionDataService.stateManagement.gameInfo;
     this._playerNumber = this._gameInfo.players.indexOf(this._sessionDataService.username);
@@ -31,7 +34,20 @@ export class GameTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._gameInfoSubscription = this._sessionDataService.stateManagement.gameInfoSubject.subscribe(
-      gameInfo => this._gameInfo = gameInfo
+      gameInfo => {
+        if (this._gameInfo.state === GameState.Guessing && gameInfo.state === GameState.Results) {
+          this._modalService.open(ResultsDialogComponent, {
+            injector: this._injector,
+            backdrop: 'static',
+            keyboard: false,
+            windowClass: 'results-modal-dialog'
+          });
+        }
+        if (gameInfo.state === GameState.End) {
+          this._router.navigateByUrl('/');
+        }
+        this._gameInfo = gameInfo;
+      }
     );
   }
 

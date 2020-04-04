@@ -75,8 +75,12 @@ export class ConfigService {
     });
   }
 
-  // public getGameInfo(gameId: any): Observable<GameInfoI> {
-  //   // return this._http.post<GameInfoI>('api/v1/games/getGame', gameId);
-
-  // }
+  public returnFromResults(gameId: String, socket: Socket): Promise<any> {
+    return this._http.post('/api/v1/games/returnFromResults', {
+      gameId
+    }).toPromise().then(result => {
+      socket.emit('updated', gameId);
+      return result;
+    });
+  }
 }
