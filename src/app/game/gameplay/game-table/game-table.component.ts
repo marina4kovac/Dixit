@@ -42,8 +42,9 @@ export class GameTableComponent implements OnInit, OnDestroy {
             keyboard: false,
             windowClass: 'results-modal-dialog'
           });
-        }
-        if (gameInfo.state === GameState.End) {
+        } else if (this._gameInfo.state === GameState.Results && gameInfo.state === GameState.ChoosingWord) {
+          this._modalService.dismissAll();
+        } else if (gameInfo.state === GameState.End) {
           this._router.navigateByUrl('/');
         }
         this._gameInfo = gameInfo;

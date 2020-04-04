@@ -19,10 +19,12 @@ export class ChooseWordComponent implements OnInit {
   choosingWordForm: FormGroup;
 
   @Input('playerNumber') private _playerNumber: number;
-  @Input('gameInfo') gameInfo: GameInfoI;
+
+  public get word(): string {
+    return this._sessionDataService.stateManagement.gameInfo.word;
+  }
 
   constructor(private _formBuilder: FormBuilder, private _sessionDataService: SessionDataService, private _configService: ConfigService) {
-    this.gameInfo = this._sessionDataService.stateManagement.gameInfo;
   }
 
   ngOnInit() {
@@ -31,8 +33,12 @@ export class ChooseWordComponent implements OnInit {
     });
   }
 
+  public showWord(): boolean {
+    return this._sessionDataService.stateManagement.gameInfo.state !== 1;
+  }
+
   public isChoosing(): boolean {
-    return this.gameInfo.state === GameState.ChoosingWord && this._playerNumber === this.gameInfo.playerChoosing;
+    return this._sessionDataService.stateManagement.gameInfo.state === GameState.ChoosingWord && this._playerNumber === this._sessionDataService.stateManagement.gameInfo.playerChoosing;
   }
 
   public invalidWord(): boolean {
@@ -49,11 +55,12 @@ export class ChooseWordComponent implements OnInit {
     }
     else {
       try {
-        let gameInfo: GameInfoI = await this._configService.chooseWord(this.gameInfo._id, this.choosingWordForm.get('word').value, this._sessionDataService.stateManagement.socket);
+        let gameInfo: GameInfoI = await this._configService.chooseWord(this._sessionDataService.stateManagement.gameInfo._id, this.choosingWordForm.get('word').value, this._sessionDataService.stateManagement.socket);
         if (!gameInfo) {
           throw 0;
         }
         this._sessionDataService.stateManagement.changeGameInfo(gameInfo);
+        this.choosingWordForm.reset();
       } catch (error) {
         this.message = 'Something went wrong';
         setTimeout(() => this.message = undefined, 1000);

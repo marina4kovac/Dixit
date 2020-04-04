@@ -1,5 +1,5 @@
-<div *ngIf="gameInfo.state !== 1">
-  <h2>Word: {{gameInfo.word}}</h2>
+<div *ngIf="showWord()">
+  <h2>Word: {{word}}</h2>
 </div>
 <form *ngIf="isChoosing()" [formGroup]="choosingWordForm" (ngSubmit)="chooseWord()">
 

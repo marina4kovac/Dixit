@@ -42,6 +42,7 @@ export class PlayCardComponent implements OnInit {
 
     } finally {
       this.processing = false;
+      this._playedCard = undefined;
     }
   }
 } 

@@ -48,7 +48,9 @@ export class ConfigService {
       gameId,
       word
     }).toPromise().then(result => {
-      socket.emit('updated', gameId);
+      if (result) {
+        socket.emit('updated', gameId);
+      }
       return result;
     });;
   }
@@ -59,7 +61,9 @@ export class ConfigService {
       player,
       card
     }).toPromise().then(result => {
-      socket.emit('updated', gameId);
+      if (result) {
+        socket.emit('updated', gameId);
+      }
       return result;
     });;
   }
@@ -70,7 +74,9 @@ export class ConfigService {
       player,
       card
     }).toPromise().then(result => {
-      socket.emit('updated', gameId);
+      if (result) {
+        socket.emit('updated', gameId);
+      }
       return result;
     });
   }
@@ -79,7 +85,9 @@ export class ConfigService {
     return this._http.post('/api/v1/games/returnFromResults', {
       gameId
     }).toPromise().then(result => {
-      socket.emit('updated', gameId);
+      if (result) {
+        socket.emit('updated', gameId);
+      }
       return result;
     });
   }
