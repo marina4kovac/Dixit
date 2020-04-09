@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
 import { SessionDataService } from 'src/app/conf/session-data.service';
 import { GameInfoI, GameState } from '../../models/game-info';
-import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfigService } from 'src/app/conf/config.service';
-import { GameGeneratorService } from '../../utils/game-generator/game-generator.service';
 
 @Component({
   selector: 'choose-word',

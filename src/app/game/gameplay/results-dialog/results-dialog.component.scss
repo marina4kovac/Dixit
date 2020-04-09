@@ -22,8 +22,16 @@
     }
   }
 
+  .bold {
+    font-weight: bold;
+  }
+
   .icon {
     color: #0069d9;
     font-size: 39px;
+  }
+
+  .list-unstyled.card-columns {
+    column-count: 2;
   }
 }

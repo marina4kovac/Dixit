@@ -8,7 +8,7 @@
       </div>
       <div class="modal-body">
         <div class="list-group" *ngIf="activeGames">
-          <button (click)="tryWaitingRoom(game)" class="list-group-item list-group-item-action"
+          <button [disabled]="processing" (click)="tryWaitingRoom(game)" class="list-group-item list-group-item-action"
             [ngClass]="{'list-group-item-dark': (i % 2), 'list-group-item-secondary': !(i % 2)}"
             *ngFor="let game of activeGames; let i = index">{{game._id}}: {{game.gameName}}</button>
         </div>

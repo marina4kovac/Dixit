@@ -22,7 +22,7 @@ export class PlayCardComponent implements OnInit {
   }
 
   public get playerDeck() {
-    return this._sessionDataService.stateManagement.gameInfo.decks.playersDecks[this.playerNumber];
+    return this._sessionDataService.stateManagement.gameInfo.playerDeck;
   }
 
   public get canClick(): boolean {

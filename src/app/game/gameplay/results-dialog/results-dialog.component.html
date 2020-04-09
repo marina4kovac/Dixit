@@ -12,6 +12,17 @@
         <li *ngFor="let guess of result.guesses">{{guess}}</li>
       </ul>
     </div>
+    <div *ngIf="isEnd()">
+      <hr>
+      Final results:
+      <div class="container">
+        <ul class="list-unstyled card-columns">
+          <li *ngFor="let result of finalResults; let i = index" style="list-style: decimal"
+            [ngClass]="{'bold': isMyResult(result.player)}">
+            {{result.player}} : {{result.points}}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 <div class="modal-footer">

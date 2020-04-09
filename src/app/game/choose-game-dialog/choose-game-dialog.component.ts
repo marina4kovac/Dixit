@@ -12,6 +12,7 @@ import { SessionDataService } from 'src/app/conf/session-data.service';
 })
 export class ChooseGameDialogComponent implements OnInit {
 
+  processing: boolean = false;
 
   public activeGames: GameInfoI[];
 
@@ -31,6 +32,7 @@ export class ChooseGameDialogComponent implements OnInit {
   }
 
   public async tryWaitingRoom(game: GameInfoI): Promise<void> {
+    this.processing = true;
     try {
       let result: any = await this._configService.joinGame(this._sessionDataService.username, game);
       if (!result || !result.success) {
@@ -40,6 +42,7 @@ export class ChooseGameDialogComponent implements OnInit {
     } catch (e) {
       this.fetchActiveGames();
     }
+    this.processing = true;
   }
 
   public onClose(): void {

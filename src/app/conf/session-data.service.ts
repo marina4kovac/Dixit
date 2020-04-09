@@ -12,6 +12,9 @@ export class SessionDataService {
 
     public wipeData() {
         this.username = undefined;
-        delete this.stateManagement;
+        if (this.stateManagement) {
+            this.stateManagement.disconnect();
+            delete this.stateManagement;
+        }
     }
 }

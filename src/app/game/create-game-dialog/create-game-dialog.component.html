@@ -3,7 +3,7 @@
       <div class="modal-header">
         <h5 class="modal-title">Create Game</h5>
       </div>
-      <form [formGroup]="gameForm" (ngSubmit)="createGame()">
+      <form [formGroup]="gameForm" (ngSubmit)="!processing && createGame()">
         <div class="modal-body">
 
           <div class="form-group" [ngClass]="{ 'has-error': invalidGameName() }">
@@ -15,8 +15,8 @@
 
           <div class="form-group" [ngClass]="{ 'has-error': invalidNumberOfPlayers() }">
             <label for="number_of_players" class="control-label">Number of players:</label>
-            <input type="number" formControlName="number_of_players" class="form-control" id="number_of_players"
-              name="number_of_players" placeholder=4>
+            <input type="number" min="3" max="6" formControlName="number_of_players" class="form-control"
+              id="number_of_players" name="number_of_players" placeholder=4>
             <p *ngIf="invalidNumberOfPlayers()" id="number_of_players_error" class="help-block">Invalid number of
               players.
             </p>
@@ -30,7 +30,7 @@
             <p class="help-block">{{message}}</p>
           </span>
           <div class="form-group has-error">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button [disabled]="processing" type="submit" class="btn btn-primary">Create</button>
           </div>
         </div>
       </form>

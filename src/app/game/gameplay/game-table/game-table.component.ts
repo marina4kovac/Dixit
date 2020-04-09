@@ -45,7 +45,9 @@ export class GameTableComponent implements OnInit, OnDestroy {
         } else if (this._gameInfo.state === GameState.Results && gameInfo.state === GameState.ChoosingWord) {
           this._modalService.dismissAll();
         } else if (gameInfo.state === GameState.End) {
-          this._router.navigateByUrl('/');
+          this._modalService.dismissAll();
+          this._sessionDataService.stateManagement.disconnect();
+          this._router.navigateByUrl('/gameOptions');
         }
         this._gameInfo = gameInfo;
       }
@@ -57,9 +59,9 @@ export class GameTableComponent implements OnInit, OnDestroy {
   }
 
   public get playedCard(): number {
-    if (!this._gameInfo.decks.tableDeck)
+    if (!this._gameInfo.tableDeck)
       return undefined;
-    let played = this._gameInfo.decks.tableDeck.find(elem => elem.player === this.playerNumber);
+    let played = this._gameInfo.tableDeck.find(elem => elem.player === this.playerNumber);
     if (!played) {
       return undefined;
     }

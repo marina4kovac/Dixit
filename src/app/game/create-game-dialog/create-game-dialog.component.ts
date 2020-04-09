@@ -1,17 +1,15 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GameGeneratorService } from '../utils/game-generator/game-generator.service';
-import { GameInfoI } from '../models/game-info';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SessionDataService } from 'src/app/conf/session-data.service';
+import { ConfigService } from 'src/app/conf/config.service';
 
 
 @Component({
   selector: 'create-game',
   templateUrl: './create-game-dialog.component.html',
   styleUrls: ['./create-game-dialog.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [GameGeneratorService]
+  encapsulation: ViewEncapsulation.None
 })
 export class CreateGameDialogComponent implements OnInit {
   submitted = false;
@@ -20,7 +18,7 @@ export class CreateGameDialogComponent implements OnInit {
   gameForm: FormGroup;
 
   constructor(private _formBuilder: FormBuilder,
-    private _gameGenerator: GameGeneratorService,
+    private _configService: ConfigService,
     private _sessionDataService: SessionDataService,
     private _activeModal: NgbActiveModal
   ) { }
@@ -50,8 +48,11 @@ export class CreateGameDialogComponent implements OnInit {
     }
     else {
       try {
-        let gameInfo: GameInfoI = await this._gameGenerator.createGame(this.gameForm.get('game_name').value, this._sessionDataService.username, this.gameForm.get('number_of_players').value);
-        this._activeModal.close(gameInfo);
+        let result = await this._configService.saveGame(this.gameForm.get('game_name').value, this.gameForm.get('number_of_players').value, this._sessionDataService.username);
+        if (!result || !result.success) {
+          throw 0;
+        }
+        this._activeModal.close(result.gameInfoWaiting);
       } catch (error) {
         this.message = error.error ? error.error : 'Something went wrong';
         setTimeout(() => this.message = undefined, 1000);

@@ -29,7 +29,7 @@ export class TableDeckComponent implements OnInit {
   }
 
   public get deck(): number[] {
-    return this._sessionDataService.stateManagement.gameInfo.decks.tableDeck.map(elem => elem.card).filter(elem => elem != this.playedCard);
+    return this._sessionDataService.stateManagement.gameInfo.tableDeck.map(elem => elem.card).filter(elem => elem != this.playedCard);
   }
 
   public faceUp(): boolean {
@@ -58,7 +58,7 @@ export class TableDeckComponent implements OnInit {
   }
 
   public get results(): string[] {
-    return this._sessionDataService.stateManagement.gameInfo.decks.tableDeck.map(elem => elem.guesses);
+    return this._sessionDataService.stateManagement.gameInfo.tableDeck.map(elem => elem.guesses);
   }
 
   constructor(private _sessionDataService: SessionDataService, private _configService: ConfigService) {

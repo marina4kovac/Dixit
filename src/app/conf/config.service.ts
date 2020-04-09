@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { GameInfoI } from '../game/models/game-info';
+import { GameInfoI, GameState } from '../game/models/game-info';
 import { JsonPipe } from '@angular/common';
 import { Socket } from 'ngx-socket-io';
 
@@ -28,8 +28,12 @@ export class ConfigService {
     }).toPromise();
   }
 
-  public saveGame(gameInfo: GameInfoI): Promise<any> {
-    return this._http.post('/api/v1/games/createGame', gameInfo).toPromise();
+  public saveGame(gameName: string, numberOfPlayers: number, player: string): Promise<any> {
+    return this._http.post('/api/v1/games/createGame', {
+      gameName,
+      numberOfPlayers,
+      player
+    }).toPromise();
   }
 
   public getActiveGames(): Promise<GameInfoI[]> {
@@ -81,9 +85,10 @@ export class ConfigService {
     });
   }
 
-  public returnFromResults(gameId: String, socket: Socket): Promise<any> {
+  public returnFromResults(gameId: String, player: string, socket: Socket): Promise<any> {
     return this._http.post('/api/v1/games/returnFromResults', {
-      gameId
+      gameId,
+      player
     }).toPromise().then(result => {
       if (result) {
         socket.emit('updated', gameId);

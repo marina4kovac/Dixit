@@ -1,9 +1,10 @@
 <div class="game-status-container">
   <span class="game-status-deck-size">DECK SIZE: {{deckSize}}</span>
+  <span class="game-status-status">{{status}}</span>
   <span class="game-status-results">
     RESULTS:
     <span class="game-status-player" *ngFor="let result of results; let i = index"
-      [ngClass]="{'bold': myResults(i)}">{{result.player}}:
+      [ngClass]="{'bold': myResults(result.player)}">{{result.player}}:
       {{result.points}}</span>
   </span>
 </div>

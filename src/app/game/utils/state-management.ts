@@ -41,12 +41,16 @@ export class StateManagement implements OnDestroy {
         return this._socket;
     }
 
-    ngOnDestroy() {
+    disconnect() {
         if (this._getMesssageSubscription) {
             this._getMesssageSubscription.unsubscribe();
         }
         if (this._socketService) {
             this._socketService.disconnect();
         }
+    }
+
+    ngOnDestroy() {
+        this.disconnect();
     }
 }

@@ -6,6 +6,12 @@
     position: absolute;
   }
 
+  .game-status-status {
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+  }
+
   .game-status-results {
     right: 0;
     position: absolute;

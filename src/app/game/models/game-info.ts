@@ -16,11 +16,13 @@ export interface GameDecksI {
 export interface GameInfoI {
     _id: String;
     gameName: string;
-    numberOfPlayers: number;
+    numberOfPlayers?: number;
     state: GameState;
-    decks: GameDecksI;
-    playerChoosing: number;
-    points: number[];
+    freeDeckSize?: number;
+    playerDeck?: number[];
+    tableDeck?: any[];
+    playerChoosing?: number;
+    points?: number[];
     prevPoints?: number[];
     players: string[];
     word?: string;
