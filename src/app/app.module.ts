@@ -27,8 +27,9 @@ import { PlayCardComponent } from './game/gameplay/play-card/play-card.component
 import { TableDeckComponent } from './game/gameplay/table-deck/table-deck.component';
 import { ResultsDialogComponent } from './game/gameplay/results-dialog/results-dialog.component';
 import { GameStatusComponent } from './game/gameplay/game-status/game-status.component';
+import { LeftGameComponent } from './left-game/left-game.component';
 
-const config: SocketIoConfig = { url: 'https://dixit-server.cleverapps.io', options: { autoConnect: false } };
+const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect: false } };
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ const config: SocketIoConfig = { url: 'https://dixit-server.cleverapps.io', opti
     PlayCardComponent,
     TableDeckComponent,
     ResultsDialogComponent,
-    GameStatusComponent
+    GameStatusComponent,
+    LeftGameComponent
   ],
   imports: [
     CommonModule,

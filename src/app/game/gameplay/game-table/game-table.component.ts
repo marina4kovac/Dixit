@@ -35,7 +35,10 @@ export class GameTableComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._gameInfoSubscription = this._sessionDataService.stateManagement.gameInfoSubject.subscribe(
       gameInfo => {
-        if (this._gameInfo.state === GameState.Guessing && gameInfo.state === GameState.Results) {
+        if (!gameInfo) {
+          this._modalService.dismissAll();
+          this._router.navigateByUrl('/gameEnd');
+        } else if (this._gameInfo.state === GameState.Guessing && gameInfo.state === GameState.Results) {
           this._modalService.open(ResultsDialogComponent, {
             injector: this._injector,
             backdrop: 'static',

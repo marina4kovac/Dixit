@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://dixit-server.cleverapps.io'
+  apiUrl: 'http://localhost:3000'
 };
 
 /*
