@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
-const card_image_path = 'assets/images/cards/card';
+const card_image_path = `${environment.assetsUrl}/assets/images/cards/card`;
 
 
 @Component({

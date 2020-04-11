@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://dixit-server.cleverapps.io'
+  apiUrl: 'https://dixit-server.cleverapps.io',
+  assetsUrl: '/Dixit'
 };
