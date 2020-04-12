@@ -14,10 +14,12 @@
         </ul>
       </div>
     </div>
-    <div *ngIf="isEnd()" class="results-break"></div>
-    <div class="final-results" *ngIf="isEnd()">
-      <hr>
+    <hr *ngIf="isEnd()" />
+    <div style="text-align: center; font-weight: bold;" *ngIf="isEnd()">
       Final results:
+    </div>
+    <div class="results-break"></div>
+    <div class="final-results" *ngIf="isEnd()">
       <div class="container">
         <ul class="list-unstyled card-columns">
           <li *ngFor="let result of finalResults; let i = index" style="list-style: decimal"
