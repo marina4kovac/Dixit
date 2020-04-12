@@ -16,6 +16,10 @@ import { Socket } from 'ngx-socket-io';
 })
 export class GameOptionsComponent implements OnInit {
 
+  public get username(): string {
+    return this._sessionDataService.username;
+  }
+
   constructor(private _injector: Injector, private _router: Router,
     private _modalService: NgbModal,
     private _sessionDataService: SessionDataService,
@@ -47,5 +51,9 @@ export class GameOptionsComponent implements OnInit {
           this._router.navigateByUrl('/waitingRoom');
         }
       });
+  }
+
+  public logout() {
+    this._router.navigateByUrl('/');
   }
 }

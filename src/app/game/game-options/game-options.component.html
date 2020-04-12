@@ -1,4 +1,15 @@
-<div class="game-options-wrapper row">
-  <button class="btn btn-primary" (click)="openJoinGameDialog()">Join game</button>
-  <button class="btn btn-primary" (click)="openCreateGameDialog()">Create game</button>
+<div class="game-options-wrapper">
+  <div>
+    <div class="icon-holder"><i class="fa fa-user-circle-o icon"></i></div>
+    <h2 class="container">
+      <p class="item">Logged in as {{username}}.</p>
+      <p class="break"></p>
+      <p class="item">What do you want to do?</p>
+    </h2>
+    <div class="game-options-options">
+      <button class="btn game-options-red" (click)="openJoinGameDialog()">Join game</button>
+      <button class="btn game-options-yellow" (click)="openCreateGameDialog()">Create game</button>
+      <button class="btn game-options-transparent" (click)="logout()">Logout</button>
+    </div>
+  </div>
 </div>

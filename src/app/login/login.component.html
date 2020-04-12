@@ -1,35 +1,34 @@
-<div class="login-wrapper row">
-<h3>Login</h3>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div class="form-group" [ngClass]="{ 'has-error': invalidUsername() }">
-    <label for="username" class="control-label">Username:</label>
-    <input type="text" [attr.disabled]="processing ? true : null" formControlName="username" class="form-control"
-      id="username" name="username" placeholder="Username" />
-    <p *ngIf="invalidUsername()" id="username_error" class="help-block">
-      Invalid username.
-    </p>
-  </div>
+<div class="login-wrapper">
+  <h3>Login</h3>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group" [ngClass]="{ 'has-error': invalidUsername() }">
+      <input type="text" [attr.disabled]="processing ? true : null" formControlName="username" class="form-control"
+        id="username" name="username" placeholder="Username" />
+      <p [ngClass]="{'invisible': !invalidUsername()}" id="username_error" class="help-block">
+        Invalid username.
+      </p>
+    </div>
 
-  <div class="form-group" [ngClass]="{ 'has-error': invalidPassword() }">
-    <label for="password" class="control-label">Password:</label>
-    <input type="password" [attr.disabled]="processing ? true : null" formControlName="password" class="form-control"
-      id="password" name="password" placeholder="Password" />
-    <p *ngIf="invalidPassword()" id="password_error" class="help-block">
-      Invalid password.
-    </p>
-  </div>
+    <div class="form-group" [ngClass]="{ 'has-error': invalidPassword() }">
+      <input type="password" [attr.disabled]="processing ? true : null" formControlName="password" class="form-control"
+        id="password" name="password" placeholder="Password" />
+      <p [ngClass]="{'invisible': !invalidPassword()}" id="password_error" class="help-block">
+        Invalid password.
+      </p>
+    </div>
 
-  <div class="form-group">
-    <button type="submit" [attr.disabled]="processing ? true : null" class="btn btn-primary">
-      Login
-    </button>
-  </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-secondary">Register</button>
+      <button type="submit" [attr.disabled]="processing ? true : null" class="btn btn-primary">
+        Login
+      </button>
+    </div>
 
-  <div *ngIf="wrongData" class="form-group has-error">
-    <p class="help-block">Invalid username or password!</p>
-  </div>
-  <div *ngIf="networkError" class="form-group has-error">
-    <p class="help-block">Network error occured!</p>
-  </div>
-</form>
+    <div *ngIf="wrongData" class="form-group has-error">
+      <p class="help-block">Invalid username or password!</p>
+    </div>
+    <div [ngClass]="{'invisible': !networkError}" class="form-group has-error">
+      <p class="help-block">Network error occured!</p>
+    </div>
+  </form>
 </div>
