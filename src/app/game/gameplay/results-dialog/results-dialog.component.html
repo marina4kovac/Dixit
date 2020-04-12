@@ -3,7 +3,7 @@
     <h5 class="modal-title">Results</h5>
   </div>
   <div class="modal-body">
-    <div>
+    <div class="mid-results">
       <div *ngFor="let result of results" class="result-card">
         <card-holder [cardId]="result.card"></card-holder>
         <div class="results-person" [ngClass]="{'bold':isPlayerChoosing(result.player)}">{{result.player}}
@@ -13,21 +13,23 @@
           <li *ngFor="let guess of result.guesses">{{guess}}</li>
         </ul>
       </div>
-      <div *ngIf="isEnd()">
-        <hr>
-        Final results:
-        <div class="container">
-          <ul class="list-unstyled card-columns">
-            <li *ngFor="let result of finalResults; let i = index" style="list-style: decimal"
-              [ngClass]="{'bold': isMyResult(result.player)}">
-              {{result.player}} : {{result.points}}</li>
-          </ul>
-        </div>
+    </div>
+    <div *ngIf="isEnd()" class="results-break"></div>
+    <div class="final-results" *ngIf="isEnd()">
+      <hr>
+      Final results:
+      <div class="container">
+        <ul class="list-unstyled card-columns">
+          <li *ngFor="let result of finalResults; let i = index" style="list-style: decimal"
+            [ngClass]="{'bold': isMyResult(result.player)}">
+            {{result.player}} : {{result.points}}</li>
+        </ul>
       </div>
     </div>
   </div>
-  <div class="modal-footer">
-    <button *ngIf="canClick()" type="button" (click)="onClose()">Next</button>
-    <i *ngIf="!canClick()" class="fa fa-spinner fa-spin icon"></i>
-  </div>
+</div>
+<div class="modal-footer">
+  <button *ngIf="canClick()" type="button" (click)="onClose()">Next</button>
+  <i *ngIf="!canClick()" class="fa fa-spinner fa-spin icon"></i>
+</div>
 </div>

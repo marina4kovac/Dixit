@@ -33,10 +33,17 @@
     background-color: #e3d3a0;
     margin-right: -0.5px;
     min-height: 3rem;
+    max-height: 90vh;
 
-    div:only-child {
+    .mid-results,
+    .final-results {
       display: flex;
       flex-wrap: nowrap;
+    }
+
+    .results-break {
+      display: flex;
+      flex-basis: 100%;
     }
   }
 
