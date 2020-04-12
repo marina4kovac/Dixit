@@ -1,8 +1,6 @@
-<div class="waiting-room-wrapper row">
+<div class="waiting-room-wrapper">
   <h3>Waiting for players to join
     <span *ngIf="gameInfo">{{gameInfo.players.length}}/{{gameInfo.numberOfPlayers}}</span>
   </h3>
-  <div class="row">
-    <i class="fa fa-refresh fa-spin fa-5x"></i>
-  </div>
+  <i class="fa fa-refresh fa-spin fa-5x"></i>
 </div>
