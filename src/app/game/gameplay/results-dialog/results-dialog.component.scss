@@ -3,6 +3,10 @@
   max-width: 100%;
   width: 26rem;
   border-radius: 15px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+
 
   .modal-header,
   .modal-footer {
@@ -34,6 +38,8 @@
     background-color: #e3d3a0;
     margin-right: -0.5px;
     min-height: 3rem;
+    display: flex;
+    flex-wrap: nowrap;
   }
 
   .result-card {
