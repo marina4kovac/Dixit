@@ -54,7 +54,7 @@ export class CreateGameDialogComponent implements OnInit {
         }
         this._activeModal.close(result.gameInfoWaiting);
       } catch (error) {
-        this.message = error.error ? error.error : 'Something went wrong';
+        this.message = error.errorMsg ? error.errorMsg : 'Something went wrong';
         setTimeout(() => this.message = undefined, 1000);
       } finally {
         this.submitted = false;

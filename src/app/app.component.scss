@@ -1,32 +1,35 @@
+:root {
+  --dixit-modal-dialog-primary-color: rgba(72, 12, 2, 1);
+  --dixit-modal-dialog-border-color: rgba(56, 9, 2, 1);
+}
+
 .form-group {
 
-  &.has-error {
+  & .has-error {
     color: red;
+    font-weight: 600;
     padding-bottom: 0px;
+    margin-bottom: -1rem;
+    font-size: 0.8rem;
   }
 
   .control-label {
     font-weight: bold;
-  }
-
-  .help-block {
-    margin-bottom: -2px;
   }
 }
 
 .modal {
   top: 10vh;
 
+  .modal-content {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+  }
+
   .modal-dialog {
     margin: auto;
-
-    .error-msg-left {
-      flex-grow: 1;
-
-      p {
-        margin: unset;
-      }
-    }
   }
 }
 
