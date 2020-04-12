@@ -1,16 +1,29 @@
-table-deck {
-  position: fixed;
+.table-deck-wrapper {
   background-color: saddlebrown;
   width: 100%;
-  left: 0;
-  top: 30px;
   display: flex;
-  height: 270px;
+  height: 50vh;
+  min-height: 15em;
   justify-content: center;
   align-items: center;
 
   card-holder.ai-chosen-card {
-    position: fixed;
-    right: 10px;
+    position: absolute;
+    right: 1vw;
+
   }
+
+  .card-box {
+    max-width: none;
+    min-height: 13em;
+    height: 40vh;
+  }
+
+  card-deck {
+    .card-box:hover {
+      height: 42vh;
+      min-height: 14em;
+    }
+  }
+
 }

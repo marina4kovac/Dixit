@@ -1,21 +1,10 @@
 .game-status-container {
-  position: relative;
-
-  .game-status-deck-size {
-    left: 0;
-    position: absolute;
-  }
-
-  .game-status-status {
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-  }
-
-  .game-status-results {
-    right: 0;
-    position: absolute;
-  }
+  background-color: white;
+  display: inline-flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 0 1vw;
 
   .game-status-player {
     padding: 0 5px;
@@ -23,5 +12,13 @@
     &.bold {
       font-weight: bold;
     }
+  }
+
+  .game-status-deck-size,
+  .game-status-status,
+  .game-status-results {
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
 }

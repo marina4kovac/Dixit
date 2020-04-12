@@ -1,19 +1,21 @@
-<div *ngIf="showWord()">
-  <h2>Word: {{word}}</h2>
+<div class="choose-word-wrapper">
+  <div *ngIf="showWord()">
+    <h2>Word: {{word}}</h2>
+  </div>
+  <form *ngIf="isChoosing()" [formGroup]="choosingWordForm" (ngSubmit)="chooseWord()">
+
+    <div class="form-group" [ngClass]="{ 'has-error': invalidWord() }" [ngStyle]="{'padding-bottom': 0}">
+      <label for="word" class="control-label">Choose word:</label>
+      <input type="text" formControlName="word" class="form-control" id="word" name="word">
+      <p [ngClass]="{'invisible': !invalidWord()}" id="word_error" class="has-error help-block">Invalid word.</p>
+    </div>
+
+    <div class="form-group has-error">
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+
+    <div class="form-group has-error">
+      <p class="help-block">{{message}}</p>
+    </div>
+  </form>
 </div>
-<form *ngIf="isChoosing()" [formGroup]="choosingWordForm" (ngSubmit)="chooseWord()">
-
-  <div class="form-group" [ngClass]="{ 'has-error': invalidWord() }" [ngStyle]="{'padding-bottom': 0}">
-    <label for="word" class="control-label">Choose word:</label>
-    <input type="text" formControlName="word" class="form-control" id="word" name="word">
-    <p *ngIf="invalidWord()" id="word_error" class="help-block">Invalid word.</p>
-  </div>
-
-  <div class="form-group has-error">
-    <button type="submit" class="btn btn-primary">Create</button>
-  </div>
-
-  <div class="form-group has-error">
-    <p class="help-block">{{message}}</p>
-  </div>
-</form>

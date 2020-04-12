@@ -1,2 +1,5 @@
-<card-deck [cards]="deck" [faceUp]="faceUp()" [canClick]="canClick()" (cardChosen)="guessCard($event)"></card-deck>
-<card-holder class="ai-chosen-card" *ngIf="playedCard !== undefined" [cardId]="playedCard"></card-holder>
+<div class="table-deck-wrapper">
+  <card-deck [cards]="deck" [faceUp]="faceUp()" [canClick]="canClick()" (cardChosen)="guessCard($event)"></card-deck>
+  <card-holder disabled="true" class="ai-chosen-card" *ngIf="playedCard !== undefined" [cardId]="playedCard">
+  </card-holder>
+</div>

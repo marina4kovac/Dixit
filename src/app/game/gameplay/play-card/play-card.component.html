@@ -1,5 +1,7 @@
-<i class="fa fa-hand-paper-o ai-hands"
-  [ngStyle]="{'transform': 'rotate(73deg)', 'margin-right': '-25px', 'z-index': '-1'}"></i>
-<card-deck [cards]="playerDeck" [faceUp]="true" [canClick]="canClick" (cardChosen)="cardChosen($event)"></card-deck>
-<i class="fa fa-hand-paper-o ai-hands"
-  [ngStyle]="{'transform': 'scale(-1, 1) rotate(73deg)', 'margin-left': '-25px', 'z-index': '-1'}"></i>
+<div class="play-card-wrapper">
+  <i class="fas fa-hand-paper ai-hands"
+    [ngStyle]="{'transform': 'rotate(73deg)', 'margin-right': '-25px', 'z-index': '-1'}"></i>
+  <card-deck [cards]="playerDeck" [faceUp]="true" [canClick]="canClick" (cardChosen)="cardChosen($event)"></card-deck>
+  <i class="fas fa-hand-paper ai-hands"
+    [ngStyle]="{'transform': 'scale(-1, 1) rotate(73deg)', 'margin-left': '-25px', 'z-index': '-1'}"></i>
+</div>

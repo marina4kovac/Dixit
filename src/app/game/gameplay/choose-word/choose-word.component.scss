@@ -1,7 +1,20 @@
-choose-word {
-  position: fixed;
-  bottom: 280px;
-  left: 50%;
-  transform: translateX(-50%);
+.choose-word-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   text-align: center;
+
+  form {
+    background-color: rgba(245, 222, 179, 0.6);
+    border-radius: 15px;
+    box-shadow: 0 0 22px 2px #bf6f59;
+    padding: 0 4vw;
+    position: absolute;
+    top: 15vh;
+  }
+
+  h2 {
+    color: wheat;
+    text-shadow: 0 0 10px black;
+  }
 }
