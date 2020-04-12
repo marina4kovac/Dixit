@@ -24,11 +24,8 @@
       </button>
     </div>
 
-    <div *ngIf="wrongData" class="form-group has-error">
-      <p class="help-block">Invalid username or password!</p>
-    </div>
-    <div [ngClass]="{'invisible': !networkError}" class="form-group has-error">
-      <p class="help-block">Network error occured!</p>
+    <div [ngClass]="{'invisible': !wrongData && !networkError}" class="form-group has-error">
+      <p class="help-block">{{wrongData? 'Invalid username or password!': 'Network error occured!'}}</p>
     </div>
   </form>
 </div>
