@@ -6,10 +6,12 @@ import { AuthGuard } from './guards/auth.guard';
 import { WaitingRoomComponent } from './game/waiting-room/waiting-room.component';
 import { GameTableComponent } from './game/gameplay/game-table/game-table.component';
 import { LeftGameComponent } from './left-game/left-game.component';
+import { RegisterComponent } from './register/register.component';
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'gameOptions', component: GameOptionsComponent, canActivate: [AuthGuard] },
   { path: 'waitingRoom', component: WaitingRoomComponent, canActivate: [AuthGuard] },
   { path: 'gameplay', component: GameTableComponent, canActivate: [AuthGuard] },

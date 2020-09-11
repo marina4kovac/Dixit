@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SessionDataService } from '../conf/session-data.service';
+import { SessionDataService } from '../conf/session-data.service'
 
 @Injectable({
    providedIn: 'root'

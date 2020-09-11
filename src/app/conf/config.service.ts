@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GameInfoI, GameState } from '../game/models/game-info';
-import { JsonPipe } from '@angular/common';
 import { Socket } from 'ngx-socket-io';
+import CryptoJS from 'crypto-js';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,9 +22,18 @@ export class ConfigService {
   }
 
   public tryLogin(username: string, password: string): Promise<any> {
+    const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
     return this._http.post('/api/v1/users/login', {
       'username': username,
-      'password': password
+      'password': hashedPassword
+    }).toPromise();
+  }
+
+  public tryRegister(username: string, password: string): Promise<any> {
+    const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
+    return this._http.post('/api/v1/users/register', {
+      'username': username,
+      'password': hashedPassword
     }).toPromise();
   }
 

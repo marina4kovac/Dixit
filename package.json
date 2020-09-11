@@ -23,15 +23,17 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.2",
     "@types/underscore": "^1.9.4",
     "bootstrap": "^4.4.1",
+    "crypto-js": "^4.0.0",
     "font-awesome": "^4.7.0",
     "ngx-socket-io": "^3.0.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "underscore": "^1.10.2",
+    "yarn": "^1.22.5",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.900.7",
+    "@angular-devkit/build-angular": "^0.1001.1",
     "@angular/cli": "~9.0.7",
     "@angular/compiler-cli": "~9.0.7",
     "@angular/language-service": "~9.0.7",
@@ -66,5 +68,8 @@
   "bugs": {
     "url": "https://github.com/marina4kovac/Dixit/issues"
   },
-  "homepage": "https://github.com/marina4kovac/Dixit#readme"
+  "homepage": "https://github.com/marina4kovac/Dixit#readme",
+  "browser": {
+    "crypto": false
+  }
 }

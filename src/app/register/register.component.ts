@@ -6,17 +6,17 @@ import { AuthService } from '../guards/auth.service';
 import { SessionDataService } from '../conf/session-data.service';
 
 @Component({
-  selector: 'login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   submitted = false;
   processing = false;
   wrongData = false;
   networkError = false;
-  loginForm: FormGroup;
+  registerForm: FormGroup;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -27,15 +27,15 @@ export class LoginComponent implements OnInit {
   ) { }
 
   invalidUsername() {
-    return this.submitted && this.loginForm.controls.username.errors != null;
+    return this.submitted && this.registerForm.controls.username.errors != null;
   }
 
   invalidPassword() {
-    return this.submitted && this.loginForm.controls.password.errors != null;
+    return this.submitted && this.registerForm.controls.password.errors != null;
   }
 
   ngOnInit() {
-    this.loginForm = this._formBuilder.group({
+    this.registerForm = this._formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -46,27 +46,26 @@ export class LoginComponent implements OnInit {
     this.processing = true;
     this.submitted = true;
 
-    if (this.loginForm.invalid == true) {
+    if (this.registerForm.invalid == true) {
       this.processing = false;
       return;
     } else {
-      const username = this.loginForm.get('username').value;
-      const password = this.loginForm.get('password').value;
+      const username = this.registerForm.get('username').value;
+      const password = this.registerForm.get('password').value;
       try {
-        const loginInfo = await this._configService.tryLogin(username, password);
-        if (!loginInfo) {
+        const registerInfo = await this._configService.tryRegister(username, password);
+        if (!registerInfo) {
           this.networkError = true;
           setTimeout(() => (this.networkError = false), 1000);
-        } else if (loginInfo.success) {
+        } else if (registerInfo.success) {
           this._sessionDataService.username = username;
           this._router.navigateByUrl('/gameOptions');
         } else {
-          switch (loginInfo.errorId) {
-            case 'WRONG_USERNAME':
-            case 'WRONG_PASSWORD':
+          switch (registerInfo.errorId) {
+            case 'INVALID_USERNAME':
               this.wrongData = true;
               this.submitted = false;
-              this.loginForm.reset();
+              this.registerForm.reset();
               setTimeout(() => (this.wrongData = false), 1000);
               break;
             case 'DB_ERROR':
@@ -83,9 +82,5 @@ export class LoginComponent implements OnInit {
         this.processing = false;
       }
     }
-  }
-
-  register() {
-    this._router.navigateByUrl('/register');
   }
 }

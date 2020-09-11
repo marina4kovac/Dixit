@@ -28,6 +28,7 @@ import { TableDeckComponent } from './game/gameplay/table-deck/table-deck.compon
 import { ResultsDialogComponent } from './game/gameplay/results-dialog/results-dialog.component';
 import { GameStatusComponent } from './game/gameplay/game-status/game-status.component';
 import { LeftGameComponent } from './left-game/left-game.component';
+import { RegisterComponent } from './register/register.component';
 
 const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect: false } };
 
@@ -37,6 +38,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect
     CardHolderComponent,
     CardDeckComponent,
     LoginComponent,
+    RegisterComponent,
     GameOptionsComponent,
     WaitingRoomComponent,
     ChooseGameDialogComponent,
