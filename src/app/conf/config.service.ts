@@ -29,6 +29,12 @@ export class ConfigService {
     }).toPromise();
   }
 
+  public loginPlatform(userEmail: string): Promise<any> {
+    return this._http.post('api/v1/users/loginPlatform', {
+      'userEmail': userEmail
+    }).toPromise();
+  }
+
   public tryRegister(username: string, password: string): Promise<any> {
     const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
     return this._http.post('/api/v1/users/register', {

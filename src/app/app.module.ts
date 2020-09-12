@@ -29,6 +29,8 @@ import { ResultsDialogComponent } from './game/gameplay/results-dialog/results-d
 import { GameStatusComponent } from './game/gameplay/game-status/game-status.component';
 import { LeftGameComponent } from './left-game/left-game.component';
 import { RegisterComponent } from './register/register.component';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
 
 const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect: false } };
 
@@ -59,7 +61,9 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect
     FormsModule,
     ReactiveFormsModule,
     SocketIoModule.forRoot(config),
-    NgbModule
+    NgbModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule
   ],
   providers: [
     ConfigService,

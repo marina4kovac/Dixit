@@ -65,4 +65,36 @@
       }
     }
   }
+
+  .platform-login {
+    display: flex;
+    justify-content: space-around;
+
+    .facebook-btn,
+    .google-btn {
+      height: 50px;
+      width: 50px;
+      padding: 0;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      vertical-align: middle;
+      font-size: 25px;
+      border: none;
+      outline: none;
+      box-shadow: 0 0 3px 2px grey;
+
+      &:hover {
+        box-shadow: 0 0 10px 5px darkslategrey;
+      }
+    }
+
+    .google-btn {
+      background-color: rgb(219, 50, 54);
+    }
+
+    .facebook-btn {
+      background-color: rgb(66 103 178);
+    }
+  }
 }

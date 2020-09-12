@@ -88,4 +88,22 @@ export class LoginComponent implements OnInit {
   register() {
     this._router.navigateByUrl('/register');
   }
+
+  async loginWithGoogle() {
+    const userEmail = await this._authService.loginWithGoogle();
+    if (userEmail) {
+      this._configService.loginPlatform(`google:${userEmail}`);
+      this._sessionDataService.username = `google:${userEmail}`;
+      this._router.navigateByUrl('/gameOptions');
+    }
+  }
+
+  async loginWithFacebook() {
+    const userEmail = await this._authService.loginWithFacebook();
+    if (userEmail) {
+      this._configService.loginPlatform(`fb:${userEmail}`);
+      this._sessionDataService.username = `fb:${userEmail}`;
+      this._router.navigateByUrl('/gameOptions');
+    }
+  }
 }

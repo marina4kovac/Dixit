@@ -16,6 +16,7 @@ export interface GameDecksI {
 export interface GameInfoI {
     _id: String;
     gameName: string;
+    creator?: string;
     numberOfPlayers?: number;
     state: GameState;
     freeDeckSize?: number;

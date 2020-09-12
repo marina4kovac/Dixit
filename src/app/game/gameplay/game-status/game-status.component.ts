@@ -12,7 +12,7 @@ export class GameStatusComponent implements OnInit {
   public get results(): any[] {
     return this._sessionDataService.stateManagement.gameInfo.players.map((value, index) => {
       return {
-        player: value,
+        player: value.replace(/#fb:/g, '').replace(/@[^@]*$/g, ''),
         points: this._sessionDataService.stateManagement.gameInfo.points[index]
       };
     });

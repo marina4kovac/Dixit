@@ -27,5 +27,12 @@
     <div [ngClass]="{'invisible': !wrongData && !networkError}" class="form-group has-error">
       <p class="help-block">{{wrongData? 'Invalid username or password!': 'Network error occured!'}}</p>
     </div>
+
+    <div class="platform-login">
+      <button type="button" class="btn btn-primary google-btn" (click)="loginWithGoogle()"><i
+          class="fab fa-google"></i></button>
+      <button type="button" class="btn btn-primary facebook-btn" (click)="loginWithFacebook()"><i
+          class="fab fa-facebook-square"></i></button>
+    </div>
   </form>
 </div>
