@@ -38,14 +38,14 @@ export class GameTableComponent implements OnInit, OnDestroy {
         if (!gameInfo) {
           this._modalService.dismissAll();
           this._router.navigateByUrl('/gameEnd');
-        } else if (this._gameInfo.state === GameState.Guessing && gameInfo.state === GameState.Results) {
+        } else if ((this._gameInfo.state === GameState.Guessing || this._gameInfo.state === GameState.PlayingCards) && gameInfo.state === GameState.Results) {
           this._modalService.open(ResultsDialogComponent, {
             injector: this._injector,
             backdrop: 'static',
             keyboard: false,
             windowClass: 'results-modal-dialog'
           });
-        } else if (this._gameInfo.state === GameState.Results && gameInfo.state === GameState.ChoosingWord) {
+        } else if (this._gameInfo.state === GameState.Results && (gameInfo.state === GameState.ChoosingWord || gameInfo.state === GameState.PlayingCards)) {
           this._modalService.dismissAll();
         } else if (gameInfo.state === GameState.End) {
           this._modalService.dismissAll();
