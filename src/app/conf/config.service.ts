@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GameInfoI, GameState } from '../game/models/game-info';
 import { Socket } from 'ngx-socket-io';
-import CryptoJS from 'crypto-js';
+import * as CryptoJS from 'crypto-js';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

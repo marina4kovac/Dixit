@@ -2,7 +2,7 @@ import { Component, Injector, Input, OnInit, ViewEncapsulation } from '@angular/
 import { GameInfoI } from '../../models/game-info';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import CryptoJS from 'crypto-js';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   templateUrl: './enter-private-game-dialog.component.html',
