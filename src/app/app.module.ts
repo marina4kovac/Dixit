@@ -31,6 +31,7 @@ import { LeftGameComponent } from './left-game/left-game.component';
 import { RegisterComponent } from './register/register.component';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { EnterPrivateGameDialogComponent } from './game/choose-game-dialog/enter-private-game-dialog/enter-private-game-dialog.component';
 
 const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect: false } };
 
@@ -45,6 +46,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect
     WaitingRoomComponent,
     ChooseGameDialogComponent,
     CreateGameDialogComponent,
+    EnterPrivateGameDialogComponent,
     ChooseWordComponent,
     GameTableComponent,
     PlayCardComponent,

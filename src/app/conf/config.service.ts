@@ -43,12 +43,24 @@ export class ConfigService {
     }).toPromise();
   }
 
-  public saveGame(gameName: string, numberOfPlayers: number, player: string): Promise<any> {
-    return this._http.post('/api/v1/games/createGame', {
-      gameName,
-      numberOfPlayers,
-      player
-    }).toPromise();
+  public saveGame(gameName: string, numberOfPlayers: number, player: string, password?: string): Promise<any> {
+    let ret;
+    if (!password) {
+      ret = this._http.post('/api/v1/games/createGame', {
+        gameName,
+        numberOfPlayers,
+        player
+      }).toPromise();
+    } else {
+      const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
+      ret = this._http.post('/api/v1/games/createPrivateGame', {
+        gameName,
+        numberOfPlayers,
+        player,
+        password: hashedPassword
+      }).toPromise();
+    }
+    return ret;
   }
 
   public getActiveGames(): Promise<GameInfoI[]> {

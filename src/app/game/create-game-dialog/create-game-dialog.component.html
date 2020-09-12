@@ -21,6 +21,21 @@
           Invalid number of players.
         </p>
       </div>
+
+      <div class="form-group">
+        <label for="is_private_game" class="control-label">Private Game:</label>
+        <input type="checkbox" formControlName="is_private_game" class="form-control checkbox-control"
+          id="is_private_game" name="is_private_game">
+      </div>
+
+      <div class="form-group" [ngStyle]="!gameForm.value.is_private_game && {'display': 'none'}">
+        <label for="private_game_password" class="control-label">Password:</label>
+        <input type="password" formControlName="private_game_password" class="form-control" id="private_game_password"
+          name="private_game_password">
+        <p [ngClass]="{'invisible': !invalidPassword()}" id="private_game_password_error" class=" has-error help-block">
+          Invalid password.
+        </p>
+      </div>
     </div>
 
     <div class="modal-footer">

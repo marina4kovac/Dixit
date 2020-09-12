@@ -1,23 +1,19 @@
-.create-game-wrraper {
+.enter-private-game-wrapper {
   box-shadow: 0 0 8px 2px rgba(13, 14, 16, 0.8);
   max-width: 100%;
   width: 26rem;
   border-radius: 15px;
 
-  form {
-    pointer-events: auto;
-  }
-
   .modal-header,
   .modal-footer {
     background-color: var(--dixit-modal-dialog-primary-color);
+    ;
     color: white;
     margin-right: -0.5px;
     text-align: center;
-    justify-content: center;
     margin-bottom: -0.5px;
 
-    .create-button {
+    .join-button {
       background-color: rgb(255, 255, 255);
       color: var(--dixit-modal-dialog-primary-color);
       font-weight: 700;
@@ -27,28 +23,27 @@
 
   .modal-header {
     border-radius: 15px 15px 0 0;
+    justify-content: space-between;
+
+    button {
+      color: var(--dixit-modal-dialog-border-color);
+      border-color: var(--dixit-modal-dialog-primary-color);
+      background-color: #e3d3a0;
+      border-radius: 12px;
+
+      &:focus {
+        outline: 0 !important;
+      }
+    }
   }
 
   .modal-footer {
     border-radius: 0 0 15px 15px;
-    justify-content: space-between;
   }
 
   .modal-body {
     background-color: #e3d3a0;
     margin-right: -0.5px;
-
-    input {
-      box-shadow: 0 0 5px 1px #77362f;
-    }
-
-    input[type='checkbox'] {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      margin-left: 15px;
-      vertical-align: middle;
-      margin-top: -3px;
-    }
+    min-height: 3rem;
   }
 }

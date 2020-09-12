@@ -27,4 +27,5 @@ export interface GameInfoI {
     prevPoints?: number[];
     players: string[];
     word?: string;
+    password?: string;
 }

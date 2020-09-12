@@ -9,7 +9,7 @@
     <div class="list-group" *ngIf="activeGames">
       <button [disabled]="processing" (click)="tryWaitingRoom(game)" class="list-group-item list-group-item-action"
         [ngClass]="{'list-group-item-dark': (i % 2), 'list-group-item-secondary': !(i % 2)}"
-        *ngFor="let game of activeGames; let i = index">{{game.gameName}}:{{game.creator}}</button>
+        *ngFor="let game of activeGames; let i = index">{{game.gameName}}({{game.creator}}){{game.password ? '-private' : ''}}</button>
     </div>
   </div>
   <div class="modal-footer">

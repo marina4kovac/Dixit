@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SessionDataService } from 'src/app/conf/session-data.service';
-import { ConfigService } from 'src/app/conf/config.service';
+import { SessionDataService } from '../../conf/session-data.service';
+import { ConfigService } from '../../conf/config.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,11 +12,13 @@ import { ConfigService } from 'src/app/conf/config.service';
   styleUrls: ['./create-game-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CreateGameDialogComponent implements OnInit {
+export class CreateGameDialogComponent implements OnInit, OnDestroy {
   submitted = false;
   processing = false;
   message: string;
   gameForm: FormGroup;
+
+  private _isPrivateGameValueChangeSubscription: Subscription;
 
   constructor(private _formBuilder: FormBuilder,
     private _configService: ConfigService,
@@ -31,12 +34,34 @@ export class CreateGameDialogComponent implements OnInit {
     return (this.submitted && this.gameForm.controls.number_of_players.errors != null);
   }
 
+  invalidPassword() {
+    return (this.submitted && this.gameForm.controls.private_game_password.errors != null);
+  }
+
   ngOnInit() {
     this.gameForm = this._formBuilder.group({
       game_name: ['', Validators.required],
-      number_of_players: ['', [Validators.required, Validators.pattern('^[1-6]?$')]]
+      number_of_players: ['', [Validators.required, Validators.pattern('^[1-6]?$')]],
+      is_private_game: [''],
+      private_game_password: ['']
     });
+
+    this._isPrivateGameValueChangeSubscription = this.gameForm.get('is_private_game').valueChanges
+      .subscribe(value => {
+        if (value) {
+          this.gameForm.get('private_game_password').setValidators(Validators.required);
+        } else {
+          this.gameForm.get('private_game_password').clearValidators();
+        }
+        this.gameForm.controls.private_game_password.updateValueAndValidity();
+      }
+      );
   }
+
+  ngOnDestroy(): void {
+    this._isPrivateGameValueChangeSubscription.unsubscribe();
+  }
+
 
   public async createGame() {
     this.submitted = true;
@@ -48,7 +73,12 @@ export class CreateGameDialogComponent implements OnInit {
     }
     else {
       try {
-        let result = await this._configService.saveGame(this.gameForm.get('game_name').value, this.gameForm.get('number_of_players').value, this._sessionDataService.username);
+        let result;
+        if (!this.gameForm.get('is_private_game')) {
+          result = await this._configService.saveGame(this.gameForm.get('game_name').value, this.gameForm.get('number_of_players').value, this._sessionDataService.username);
+        } else {
+          result = await this._configService.saveGame(this.gameForm.get('game_name').value, this.gameForm.get('number_of_players').value, this._sessionDataService.username, this.gameForm.get('private_game_password').value);
+        }
         if (!result || !result.success) {
           throw 0;
         }

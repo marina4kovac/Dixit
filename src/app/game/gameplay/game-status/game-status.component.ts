@@ -12,7 +12,7 @@ export class GameStatusComponent implements OnInit {
   public get results(): any[] {
     return this._sessionDataService.stateManagement.gameInfo.players.map((value, index) => {
       return {
-        player: value.replace(/#fb:/g, '').replace(/@[^@]*$/g, ''),
+        player: value.replace(/^[^:]*:/g, '').replace(/@[^@]*$/g, ''),
         points: this._sessionDataService.stateManagement.gameInfo.points[index]
       };
     });
@@ -29,7 +29,8 @@ export class GameStatusComponent implements OnInit {
   public get status(): string {
     switch (this._sessionDataService.stateManagement.gameInfo.state) {
       case GameState.ChoosingWord:
-        return `Player ${this._sessionDataService.stateManagement.gameInfo.players[this._sessionDataService.stateManagement.gameInfo.playerChoosing]} is choosing the word`;
+        const playerName = this._sessionDataService.stateManagement.gameInfo.players[this._sessionDataService.stateManagement.gameInfo.playerChoosing].replace(/^[^:]*:/g, '').replace(/@[^@]*$/g, '');
+        return `Player ${playerName} is choosing the word`;
       case GameState.PlayingCards:
         return `Playing cards is in progress (${this._sessionDataService.stateManagement.gameInfo.tableDeck.length}/${this._sessionDataService.stateManagement.gameInfo.numberOfPlayers} played)`;
       case GameState.Guessing:

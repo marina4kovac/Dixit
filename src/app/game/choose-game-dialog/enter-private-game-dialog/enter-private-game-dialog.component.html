@@ -1,0 +1,29 @@
+<div class="enter-private-game-wrapper">
+  <div class="modal-header">
+    <h5 class="modal-title">Enter private game</h5>
+  </div>
+  <form [formGroup]="entryForm" (ngSubmit)="!processing && enterGame()">
+    <div class="modal-body">
+
+      <div class="form-group">
+        <label for="password" class="control-label">Password:</label>
+        <input type="password" formControlName="password" class="form-control" id="password" name="password">
+        <p [ngClass]="{'invisible': !invalidPassword()}" id="password_error" class=" has-error help-block">
+          Invalid password.
+        </p>
+        <p [ngClass]="{'invisible': !message}" id="password_error_msg" class=" has-error help-block">
+          {{message}}
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <!-- <span class="form-group has-error error-msg-left">
+        <p class="help-block">{{message}}</p>
+      </span> -->
+      <div class="form-group">
+        <button [disabled]="processing" type="submit" class="btn join-button">Join</button>
+      </div>
+    </div>
+  </form>
+
+</div>
