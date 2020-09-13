@@ -30,7 +30,8 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button *ngIf="canClick()" type="button" (click)="onClose()">Next</button>
+    <button *ngIf="canClick() && isEnd()" type="button" (click)="onRematch()">Rematch</button>
+    <button *ngIf="canClick()" type="button" (click)="onClose()">{{isEnd() ? 'Return' : 'Next'}}</button>
     <i *ngIf="!canClick()" class="fa fa-spinner fa-spin icon"></i>
   </div>
 </div>

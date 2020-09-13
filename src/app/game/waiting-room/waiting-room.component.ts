@@ -25,9 +25,11 @@ export class WaitingRoomComponent implements OnDestroy {
       this._router.navigateByUrl('/gameplay');
     }
     this._gameInfoSubscription = this._sessionDataService.stateManagement.gameInfoSubject.subscribe(gameInfo => {
-      this._gameInfo = gameInfo;
-      if (gameInfo.state !== GameState.Waiting) {
-        this._router.navigateByUrl('/gameplay');
+      if (this._gameInfo._id === gameInfo._id) {
+        this._gameInfo = gameInfo;
+        if (gameInfo.state !== GameState.Waiting) {
+          this._router.navigateByUrl('/gameplay');
+        }
       }
     });
   }

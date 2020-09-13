@@ -29,8 +29,8 @@ export class ConfigService {
     }).toPromise();
   }
 
-  public loginPlatform(userEmail: string): Promise<any> {
-    return this._http.post('api/v1/users/loginPlatform', {
+  public async loginPlatform(userEmail: string): Promise<any> {
+    return await this._http.post('api/v1/users/loginPlatform', {
       'userEmail': userEmail
     }).toPromise();
   }
@@ -63,8 +63,9 @@ export class ConfigService {
     return ret;
   }
 
-  public getActiveGames(): Promise<GameInfoI[]> {
-    return this._http.get('/api/v1/games/getActiveGames').toPromise().then((result: any) => result.activeGames);
+  public async getActiveGames(): Promise<GameInfoI[]> {
+    const result = await this._http.get('/api/v1/games/getActiveGames').toPromise();
+    return (result as any).activeGames;
   }
 
   public joinGame(player: string, gameInfo: GameInfoI): Promise<any> {
@@ -74,53 +75,80 @@ export class ConfigService {
     }).toPromise();
   }
 
-  public chooseWord(gameId: String, word: string, socket: Socket): Promise<any> {
-    return this._http.post('/api/v1/games/chooseWord', {
+  public async chooseWord(gameId: String, word: string, socket: Socket): Promise<any> {
+    const result = await this._http.post('/api/v1/games/chooseWord', {
       gameId,
       word
-    }).toPromise().then(result => {
-      if (result) {
-        socket.emit('updated', gameId);
-      }
-      return result;
-    });;
+    }).toPromise();
+    if (result) {
+      socket.emit('updated', gameId);
+    }
+    return result;;
   }
 
-  public playCard(gameId: String, player: number, card: number, socket: Socket): Promise<any> {
-    return this._http.post('/api/v1/games/playCard', {
+  public async playCard(gameId: String, player: number, card: number, socket: Socket): Promise<any> {
+    const result = await this._http.post('/api/v1/games/playCard', {
       gameId,
       player,
       card
-    }).toPromise().then(result => {
-      if (result) {
-        socket.emit('updated', gameId);
-      }
-      return result;
-    });;
+    }).toPromise();
+    if (result) {
+      socket.emit('updated', gameId);
+    }
+    return result;;
   }
 
-  public guessCard(gameId: String, player: string, card: number, socket: Socket): Promise<any> {
-    return this._http.post('/api/v1/games/guessCard', {
+  public async guessCard(gameId: String, player: string, card: number, socket: Socket): Promise<any> {
+    const result = await this._http.post('/api/v1/games/guessCard', {
       gameId,
       player,
       card
-    }).toPromise().then(result => {
+    }).toPromise();
+    if (result) {
+      socket.emit('updated', gameId);
+    }
+    return result;
+  }
+
+  public async returnFromResults(gameId: String, player: string, socket: Socket): Promise<any> {
+    let result;
+    try {
+      result = await this._http.post('/api/v1/games/returnFromResults', {
+        gameId,
+        player
+      }).toPromise();
       if (result) {
         socket.emit('updated', gameId);
       }
-      return result;
-    });
+    } catch {
+
+    }
+    return result;
   }
 
-  public returnFromResults(gameId: String, player: string, socket: Socket): Promise<any> {
-    return this._http.post('/api/v1/games/returnFromResults', {
+  public async rematch(gameId: String, player: string, socket: Socket): Promise<any> {
+    const result = await this._http.post('/api/v1/games/rematch', {
       gameId,
       player
-    }).toPromise().then(result => {
-      if (result) {
-        socket.emit('updated', gameId);
-      }
-      return result;
-    });
+    }).toPromise();
+    if (result) {
+      socket.emit('updated', gameId);
+    }
+    return result;
   }
+  a
+  public async joinRematchGame(gameName: string, creator: string, player: string, numberOfPlayers: number, socket: Socket, password?: string): Promise<any> {
+    const result: any = await this._http.post('/api/v1/games/joinRematchGame', {
+      gameName,
+      creator,
+      player,
+      numberOfPlayers,
+      password
+    }).toPromise();
+    // if (result && result.success && result.gameInfo && result.gameInfo.state === GameState.ChoosingWord) {
+    //   socket.emit('updated', result.gameInfo._id);
+    // }
+    return result;
+  }
+
 }

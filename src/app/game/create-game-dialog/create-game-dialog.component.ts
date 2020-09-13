@@ -74,7 +74,7 @@ export class CreateGameDialogComponent implements OnInit, OnDestroy {
     else {
       try {
         let result;
-        if (!this.gameForm.get('is_private_game')) {
+        if (!this.gameForm.get('is_private_game').value) {
           result = await this._configService.saveGame(this.gameForm.get('game_name').value, this.gameForm.get('number_of_players').value, this._sessionDataService.username);
         } else {
           result = await this._configService.saveGame(this.gameForm.get('game_name').value, this.gameForm.get('number_of_players').value, this._sessionDataService.username, this.gameForm.get('private_game_password').value);

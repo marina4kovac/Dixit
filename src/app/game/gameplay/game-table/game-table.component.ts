@@ -57,7 +57,7 @@ export class GameTableComponent implements OnInit, OnDestroy {
             } else if (gameInfo.state === GameState.PlayingCards) {
               this.playCardComponent.startTimer();
             }
-          });
+          }).catch(() => { });
         } else if ((this._gameInfo.state === GameState.Waiting || this._gameInfo.state === GameState.Results) && (gameInfo.state === GameState.ChoosingWord || gameInfo.state === GameState.PlayingCards)) {
           if (this._gameInfo.state === GameState.Results) {
             this._modalService.dismissAll();
@@ -70,6 +70,7 @@ export class GameTableComponent implements OnInit, OnDestroy {
         } else if (gameInfo.state === GameState.End) {
           this._modalService.dismissAll();
           this._sessionDataService.stateManagement.disconnect();
+          // this._modalService.open()
           this._router.navigateByUrl('/gameOptions');
         } else if (gameInfo.state === GameState.PlayingCards && (this._gameInfo.state === GameState.ChoosingWord || this._gameInfo.state === GameState.Results)) {
           this.playCardComponent.startTimer();
