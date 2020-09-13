@@ -24,6 +24,32 @@ export class TableDeckComponent implements OnInit {
       }
     }
   }
+
+
+  @Input() startTimer = (): void => {
+    this._sessionDataService.timer = 60;
+    setTimeout(async () => {
+      await this.decTimer();
+    }, 1000);
+  };
+
+  private async decTimer() {
+    if (this._sessionDataService.timer > 0 && this._sessionDataService.stateManagement.gameInfo.state === GameState.Guessing) {
+      this._sessionDataService.timer--;
+      if (this._sessionDataService.stateManagement.gameInfo.playerChoosing !== this.playerNumber && this._sessionDataService.stateManagement.gameInfo.state === GameState.Guessing && !this._guessedCard && this._sessionDataService.timer === 0) {
+        const deck: number[] = this.deck;
+        const card = deck[Math.random() * deck.length];
+        await this.guessCard(card);
+      } else {
+        setTimeout(async () => {
+          await this.decTimer();
+        }, 1000);
+      }
+    }
+  }
+
+
+
   get playedCard(): number {
     return this._playedCard;
   }
@@ -37,7 +63,7 @@ export class TableDeckComponent implements OnInit {
   }
 
   public canClick(): boolean {
-    return this._sessionDataService.stateManagement.gameInfo.playerChoosing !== this.playerNumber && this._sessionDataService.stateManagement.gameInfo.state === GameState.Guessing && !this._guessedCard;
+    return this._sessionDataService.timer !== 0 && this._sessionDataService.stateManagement.gameInfo.playerChoosing !== this.playerNumber && this._sessionDataService.stateManagement.gameInfo.state === GameState.Guessing && !this._guessedCard;
   }
 
   public async guessCard($event) {
@@ -46,6 +72,9 @@ export class TableDeckComponent implements OnInit {
       let gameInfo = await this._configService.guessCard(this._sessionDataService.stateManagement.gameInfo._id, this._sessionDataService.username, this._guessedCard, this._sessionDataService.stateManagement.socket);
       if (!gameInfo) {
         throw 0;
+      }
+      if (gameInfo.state === GameState.Results) {
+        this._sessionDataService.timer = undefined;
       }
       this._sessionDataService.stateManagement.changeGameInfo(gameInfo);
     } catch (e) {

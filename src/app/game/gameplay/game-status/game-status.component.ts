@@ -30,11 +30,11 @@ export class GameStatusComponent implements OnInit {
     switch (this._sessionDataService.stateManagement.gameInfo.state) {
       case GameState.ChoosingWord:
         const playerName = this._sessionDataService.stateManagement.gameInfo.players[this._sessionDataService.stateManagement.gameInfo.playerChoosing].replace(/^[^:]*:/g, '').replace(/@[^@]*$/g, '');
-        return `Player ${playerName} is choosing the word`;
+        return `Player ${playerName} is choosing the word : ${this._sessionDataService.timer}`;
       case GameState.PlayingCards:
-        return `Playing cards is in progress (${this._sessionDataService.stateManagement.gameInfo.tableDeck.length}/${this._sessionDataService.stateManagement.gameInfo.numberOfPlayers} played)`;
+        return `Playing cards is in progress (${this._sessionDataService.stateManagement.gameInfo.tableDeck.length}/${this._sessionDataService.stateManagement.gameInfo.numberOfPlayers} played) : ${this._sessionDataService.timer}`;
       case GameState.Guessing:
-        return `Guessing cards is in progress`;
+        return `Guessing cards is in progress : ${this._sessionDataService.timer}`;
       case GameState.Results:
         return `Displaying results`;
     }

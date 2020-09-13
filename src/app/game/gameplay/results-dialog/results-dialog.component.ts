@@ -74,9 +74,10 @@ export class ResultsDialogComponent implements OnInit {
       }
       if (gameInfo.state !== GameState.Results) {
         this._clicked = false;
+        this._sessionDataService.timer = undefined;
         this._sessionDataService.stateManagement.changeGameInfo(gameInfo);
         if (gameInfo.state === GameState.ChoosingWord || gameInfo.freeDeckSize === 0) {
-          this._activeModal.close();
+          this._activeModal.close(gameInfo);
         }
       }
     } catch (e) {

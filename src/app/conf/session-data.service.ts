@@ -10,6 +10,8 @@ export class SessionDataService {
 
     public stateManagement: StateManagement;
 
+    public timer: number;
+
     public wipeData() {
         this.username = undefined;
         if (this.stateManagement) {

@@ -32,9 +32,10 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "firebase",
+              "firebase/app",
               "crypto-js",
-              "socket.io-client"
+              "socket.io-client",
+              "@firebase/auth"
             ]
           },
           "configurations": {

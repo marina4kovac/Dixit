@@ -15,6 +15,29 @@ export class PlayCardComponent implements OnInit {
   private _playedCard: number;
   @Input('playerNumber') playerNumber: number;
 
+
+  @Input() startTimer = (): void => {
+    this._sessionDataService.timer = 60;
+    setTimeout(async () => {
+      await this.decTimer();
+    }, 1000);
+  };
+
+  private async decTimer() {
+    if (this._sessionDataService.timer > 0 && this._sessionDataService.stateManagement.gameInfo.state === GameState.PlayingCards) {
+      this._sessionDataService.timer--;
+      if (!this._playedCard && this.playerDeck.length === 6 && this._sessionDataService.timer === 0) {
+        this.processing = true;
+        const card = this._sessionDataService.stateManagement.gameInfo.playerDeck.splice(Math.random() * 6, 1)[0];
+        await this.cardChosen(card);
+      } else {
+        setTimeout(async () => {
+          await this.decTimer();
+        }, 1000);
+      }
+    }
+  }
+
   constructor(private _configService: ConfigService, private _sessionDataService: SessionDataService) {
   }
 

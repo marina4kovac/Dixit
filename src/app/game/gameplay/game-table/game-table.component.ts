@@ -1,10 +1,13 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy, Injector } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, Injector, ViewChild } from '@angular/core';
 import { SessionDataService } from 'src/app/conf/session-data.service';
 import { Subscription } from 'rxjs';
 import { GameInfoI, GameState } from '../../models/game-info';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResultsDialogComponent } from '../results-dialog/results-dialog.component';
 import { Router } from '@angular/router';
+import { ChooseWordComponent } from '../choose-word/choose-word.component';
+import { PlayCardComponent } from '../play-card/play-card.component';
+import { TableDeckComponent } from '../table-deck/table-deck.component';
 
 @Component({
   selector: 'game-table',
@@ -13,6 +16,10 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class GameTableComponent implements OnInit, OnDestroy {
+
+  @ViewChild(ChooseWordComponent, { static: false }) chooseWordComponent: ChooseWordComponent;
+  @ViewChild(PlayCardComponent, { static: false }) playCardComponent: PlayCardComponent;
+  @ViewChild(TableDeckComponent, { static: false }) tableDeckComponent: TableDeckComponent;
 
   private _playerNumber: number;
   private _gameInfoSubscription: Subscription;
@@ -44,13 +51,32 @@ export class GameTableComponent implements OnInit, OnDestroy {
             backdrop: 'static',
             keyboard: false,
             windowClass: 'results-modal-dialog'
+          }).result.then((gameInfo: GameInfoI) => {
+            if (gameInfo.state === GameState.ChoosingWord) {
+              this.chooseWordComponent.startTimer();
+            } else if (gameInfo.state === GameState.PlayingCards) {
+              this.playCardComponent.startTimer();
+            }
           });
-        } else if (this._gameInfo.state === GameState.Results && (gameInfo.state === GameState.ChoosingWord || gameInfo.state === GameState.PlayingCards)) {
-          this._modalService.dismissAll();
+        } else if ((this._gameInfo.state === GameState.Waiting || this._gameInfo.state === GameState.Results) && (gameInfo.state === GameState.ChoosingWord || gameInfo.state === GameState.PlayingCards)) {
+          if (this._gameInfo.state === GameState.Results) {
+            this._modalService.dismissAll();
+          }
+          if (gameInfo.state === GameState.ChoosingWord) {
+            this.chooseWordComponent.startTimer();
+          } else if (gameInfo.state === GameState.PlayingCards) {
+            this.playCardComponent.startTimer();
+          }
         } else if (gameInfo.state === GameState.End) {
           this._modalService.dismissAll();
           this._sessionDataService.stateManagement.disconnect();
           this._router.navigateByUrl('/gameOptions');
+        } else if (gameInfo.state === GameState.PlayingCards && (this._gameInfo.state === GameState.ChoosingWord || this._gameInfo.state === GameState.Results)) {
+          this.playCardComponent.startTimer();
+        } else if (gameInfo.state === GameState.ChoosingWord && this._sessionDataService.timer === undefined) {
+          this.chooseWordComponent.startTimer();
+        } else if (this._gameInfo.state === GameState.PlayingCards && gameInfo.state === GameState.Guessing) {
+          this.tableDeckComponent.startTimer();
         }
         this._gameInfo = gameInfo;
       }
