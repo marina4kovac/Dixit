@@ -32,6 +32,7 @@ import { RegisterComponent } from './register/register.component';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { EnterPrivateGameDialogComponent } from './game/choose-game-dialog/enter-private-game-dialog/enter-private-game-dialog.component';
+import { TopPlayersComponent } from './game/top-players/top-players.component';
 
 const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect: false } };
 
@@ -53,7 +54,8 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: { autoConnect
     TableDeckComponent,
     ResultsDialogComponent,
     GameStatusComponent,
-    LeftGameComponent
+    LeftGameComponent,
+    TopPlayersComponent
   ],
   imports: [
     CommonModule,

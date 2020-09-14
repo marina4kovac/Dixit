@@ -4,6 +4,13 @@
     <h2 class="container">
       <p class="item">Logged in as {{username}}.</p>
       <p class="break"></p>
+      <p *ngIf="rankMonth && rankWeek" class="item">
+        TopMonth #{{rankMonth}} TopWeek #{{rankWeek}}
+      </p>
+      <p *ngIf="!rankMonth || !rankWeek" class="item">
+        Calculating ranks <i class="fas fa-sync fa-spin"></i>
+      </p>
+      <p class="break"></p>
       <p class="item">What do you want to do?</p>
     </h2>
     <div class="game-options-options">

@@ -29,3 +29,8 @@ export interface GameInfoI {
     word?: string;
     password?: string;
 }
+
+export interface PlayerPoints {
+    player: string;
+    points: number;
+}

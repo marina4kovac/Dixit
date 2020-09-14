@@ -1,4 +1,4 @@
-import { GameInfoI } from '../models/game-info';
+import { GameInfoI, PlayerPoints } from '../models/game-info';
 import { OnDestroy } from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
 import { SocketHandling } from 'src/app/conf/socket-handling';
@@ -53,4 +53,5 @@ export class StateManagement implements OnDestroy {
     ngOnDestroy() {
         this.disconnect();
     }
+
 }

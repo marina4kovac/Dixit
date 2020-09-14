@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Injector, OnInit, ViewEncapsulation } from '@angular/core';
 import { SessionDataService } from 'src/app/conf/session-data.service';
 import { ConfigService } from 'src/app/conf/config.service';
 import { GameInfoI, GameState } from '../../models/game-info';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'underscore';
 import { Router } from '@angular/router';
 import { StateManagement } from '../../utils/state-management';
+import { CreateGameDialogComponent } from '../../create-game-dialog/create-game-dialog.component';
 
 @Component({
   selector: 'results-dialog',
@@ -45,10 +46,12 @@ export class ResultsDialogComponent implements OnInit {
     return _.sortBy(results, value => -value.points);
   }
 
-  constructor(private _sessionDataService: SessionDataService,
+  constructor(private _injector: Injector,
+    private _sessionDataService: SessionDataService,
     private _configService: ConfigService,
     private _activeModal: NgbActiveModal,
-    private _router: Router
+    private _router: Router,
+    private _modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -111,7 +114,6 @@ export class ResultsDialogComponent implements OnInit {
       this._sessionDataService.timer = undefined;
       this._sessionDataService.stateManagement.changeGameInfo(gameInfo);
       this._sessionDataService.stateManagement.disconnect();
-      this._sessionDataService.stateManagement.changeGameInfo(gameInfo);
 
       const result: any = await this._configService.joinRematchGame(oldGameInfo.gameName, oldGameInfo.creator, oldPlayer, oldGameInfo.numberOfPlayers, this._sessionDataService.stateManagement.socket, oldGameInfo.password);
       if (result && result.success && (result.gameInfo || result.gameInfoWaiting)) {
@@ -122,6 +124,33 @@ export class ResultsDialogComponent implements OnInit {
       } else {
         throw 0;
       }
+    } catch (e) {
+      this._clicked = false;
+      alert('An error occured!');
+    }
+  }
+  async onNew(): Promise<any> {
+    this._clicked = true;
+    try {
+      const oldPlayer = this._sessionDataService.username;
+      let gameInfo: GameInfoI = await this._configService.returnFromResults(this._sessionDataService.stateManagement.gameInfo._id, this._sessionDataService.username, this._sessionDataService.stateManagement.socket);
+      if (!gameInfo) {
+        throw 0;
+      }
+
+      this._sessionDataService.timer = undefined;
+      this._sessionDataService.stateManagement.changeGameInfo(gameInfo);
+      this._sessionDataService.stateManagement.disconnect();
+
+      this._modalService.open(CreateGameDialogComponent, {
+        injector: this._injector
+      }).result.then(value => {
+        this._activeModal.dismiss();
+        if (value) {
+          this._sessionDataService.stateManagement = new StateManagement(this._sessionDataService.stateManagement.socket, value, oldPlayer);
+          this._router.navigateByUrl('/waitingRoom');
+        }
+      }).catch(() => { });
     } catch (e) {
       this._clicked = false;
       alert('An error occured!');

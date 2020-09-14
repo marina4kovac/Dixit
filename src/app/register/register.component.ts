@@ -4,6 +4,7 @@ import { ConfigService } from '../conf/config.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../guards/auth.service';
 import { SessionDataService } from '../conf/session-data.service';
+import { CalculateTopListsService } from '../game/utils/calculateTopLists.service';
 
 @Component({
   selector: 'register',
@@ -17,29 +18,46 @@ export class RegisterComponent implements OnInit {
   wrongData = false;
   networkError = false;
   registerForm: FormGroup;
+  init = true;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _configService: ConfigService,
     private _router: Router,
     private _authService: AuthService,
-    private _sessionDataService: SessionDataService
-  ) { }
+    private _sessionDataService: SessionDataService,
+    private _calculateTopLists: CalculateTopListsService
+  ) {
+  }
 
   invalidUsername() {
-    return this.submitted && this.registerForm.controls.username.errors != null;
+    return this.submitted && this.registerForm.controls.username.errors !== null;
   }
 
   invalidPassword() {
-    return this.submitted && this.registerForm.controls.password.errors != null;
+    return this.submitted && this.registerForm.controls.password.errors !== null;
+  }
+
+  invalidPassword2() {
+    return this.submitted && this.registerForm.controls.password2.errors !== null;
   }
 
   ngOnInit() {
+
     this.registerForm = this._formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      password2: ['', (validationParams) => {
+        if (this.registerForm && this.registerForm.get('password').value !== validationParams.value) {
+          return {
+            notSame: true
+          };
+        } else {
+          return null;
+        }
+      }]
     });
-    this._authService.logout();
+
   }
 
   async onSubmit() {
@@ -82,5 +100,9 @@ export class RegisterComponent implements OnInit {
         this.processing = false;
       }
     }
+  }
+
+  public goBack(): void {
+    this._router.navigateByUrl('/');
   }
 }

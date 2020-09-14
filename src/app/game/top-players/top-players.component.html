@@ -1,0 +1,26 @@
+<div class="top-results-wrapper">
+  <div class="title-holder">
+    {{ title }}
+    <button type="button" (click)="refresh()">
+      <i class="fas fa-sync"></i>
+    </button>
+  </div>
+  <div class="table-holder">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Player</th>
+          <th scope="col">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of results; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{result.player}}</td>
+          <td>{{ result.points }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

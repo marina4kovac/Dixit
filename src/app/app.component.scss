@@ -35,9 +35,41 @@
 
 
 .outlet-wrapper {
+  min-height: fit-content;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
   background-image: url('../assets/images/login-background.jpg');
-  background-size: cover;
+  background-size: auto;
   background-repeat: no-repeat;
+}
+
+
+@media (max-width: 1079px) {
+  .login-screen-results {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+@media(min-width: 1080px) {
+  .login-screen-results {
+    position: absolute;
+    top: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 30px;
+
+    &.top-month {
+      right: 0;
+    }
+
+    &.top-week {
+      left: 0;
+    }
+
+    .top-results-wrapper {
+      width: calc((100vw - 490px)/2);
+    }
+  }
 }

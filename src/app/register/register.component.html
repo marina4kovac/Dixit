@@ -17,12 +17,30 @@
       </p>
     </div>
 
+    <div class="form-group" [ngClass]="{ 'has-error': invalidPassword2() }">
+      <input type="password" [attr.disabled]="processing ? true : null" formControlName="password2" class="form-control"
+        id="password2" name="password2" placeholder="Retype Password" />
+      <p [ngClass]="{'invisible': invalidPassword() || !invalidPassword2() }" id="password2_error" class="help-block">
+        Passwords are not the same.
+      </p>
+    </div>
+
     <div class="form-group">
+      <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
       <button type="submit" [attr.disabled]="processing ? true : null" class="btn btn-primary">Register</button>
     </div>
 
     <div [ngClass]="{'invisible': !wrongData && !networkError}" class="form-group has-error">
-      <p class="help-block">{{wrongData? 'Invalid username or password!': 'Network error occured!'}}</p>
+      <p class="help-block">{{wrongData? 'Username taken!': 'Network error occured!'}}</p>
     </div>
   </form>
+</div>
+
+<div class="login-screen-results top-month">
+  <top-players [type]=0 [title]="'Top Month'">
+  </top-players>
+</div>"
+<div class="login-screen-results top-week">
+  <top-players [type]=1 [title]="'Top Week'">
+  </top-players>
 </div>

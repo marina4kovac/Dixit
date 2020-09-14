@@ -6,6 +6,7 @@ import { CreateGameDialogComponent } from '../create-game-dialog/create-game-dia
 import { SessionDataService } from 'src/app/conf/session-data.service';
 import { StateManagement } from '../utils/state-management';
 import { Socket } from 'ngx-socket-io';
+import { CalculateTopListsService } from '../utils/calculateTopLists.service';
 
 @Component({
   selector: 'game-options',
@@ -20,14 +21,21 @@ export class GameOptionsComponent implements OnInit {
     return this._sessionDataService.username;
   }
 
+  public rankWeek: number;
+  public rankMonth: number;
+
   constructor(private _injector: Injector, private _router: Router,
     private _modalService: NgbModal,
     private _sessionDataService: SessionDataService,
-    private _socket: Socket) {
-
+    private _socket: Socket, private _calculateTopLists: CalculateTopListsService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const topWeek = await this._calculateTopLists.topWeekList();
+    const topMonth = await this._calculateTopLists.topMonthList();
+
+    this.rankWeek = (topWeek.findIndex(rank => rank.player === this._sessionDataService.username) + 1) || (topWeek.length + 1);
+    this.rankMonth = (topMonth.findIndex(rank => rank.player === this._sessionDataService.username) + 1) || (topMonth.length + 1);
   }
 
   public openCreateGameDialog() {

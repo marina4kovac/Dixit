@@ -136,7 +136,7 @@ export class ConfigService {
     }
     return result;
   }
-  a
+
   public async joinRematchGame(gameName: string, creator: string, player: string, numberOfPlayers: number, socket: Socket, password?: string): Promise<any> {
     const result: any = await this._http.post('/api/v1/games/joinRematchGame', {
       gameName,
@@ -145,10 +145,11 @@ export class ConfigService {
       numberOfPlayers,
       password
     }).toPromise();
-    // if (result && result.success && result.gameInfo && result.gameInfo.state === GameState.ChoosingWord) {
-    //   socket.emit('updated', result.gameInfo._id);
-    // }
     return result;
+  }
+
+  public async getGameHistory(): Promise<any> {
+    return await this._http.get('/api/v1/games/getGameHistory', {}).toPromise();
   }
 
 }

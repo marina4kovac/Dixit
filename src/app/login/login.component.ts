@@ -4,6 +4,7 @@ import { ConfigService } from '../conf/config.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../guards/auth.service';
 import { SessionDataService } from '../conf/session-data.service';
+import { CalculateTopListsService } from '../game/utils/calculateTopLists.service';
 
 @Component({
   selector: 'login',
@@ -23,8 +24,10 @@ export class LoginComponent implements OnInit {
     private _configService: ConfigService,
     private _router: Router,
     private _authService: AuthService,
-    private _sessionDataService: SessionDataService
-  ) { }
+    private _sessionDataService: SessionDataService,
+    private _calculateTopLists: CalculateTopListsService
+  ) {
+  }
 
   invalidUsername() {
     return this.submitted && this.loginForm.controls.username.errors != null;
@@ -106,4 +109,5 @@ export class LoginComponent implements OnInit {
       this._router.navigateByUrl('/gameOptions');
     }
   }
+
 }
