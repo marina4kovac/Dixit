@@ -20,7 +20,7 @@ export class SocketHandling implements OnDestroy {
         this._socket.ioSocket.io.opts.query = { gameId: this._gameId, player: this._player };
         this._socket.connect();
         this._socket.on('updateRequest', (result) => {
-            if (result && result._id === this._gameId) {
+            if (result && result._id === this._gameId && (!this._latestData || JSON.stringify(this._latestData) !== JSON.stringify(result))) {
                 this._latestData = result;
                 this._latestDataSubject.next(result);
             }
