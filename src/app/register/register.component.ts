@@ -48,7 +48,11 @@ export class RegisterComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       password2: ['', (validationParams) => {
-        if (this.registerForm && this.registerForm.get('password').value !== validationParams.value) {
+        if (this.registerForm && !this.registerForm.get('password').value) {
+          return {
+            required: true
+          };
+        } else if (this.registerForm && this.registerForm.get('password').value !== validationParams.value) {
           return {
             notSame: true
           };

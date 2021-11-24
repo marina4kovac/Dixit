@@ -19,14 +19,15 @@
 
     <div class="form-group" [ngClass]="{ 'has-error': invalidPassword2() }">
       <input type="password" [attr.disabled]="processing ? true : null" formControlName="password2" class="form-control"
-        id="password2" name="password2" placeholder="Retype Password" />
+        id="password2" name="password2" placeholder="Retype Password" #retypedPassword />
       <p [ngClass]="{'invisible': invalidPassword() || !invalidPassword2() }" id="password2_error" class="help-block">
-        Passwords are not the same.
+        {{ retypedPassword.value === '' ? 'Please retype password.' : 'Passwords are not the same.'}}
       </p>
     </div>
 
     <div class="form-group">
-      <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
+      <button type="button" [attr.disabled]="processing ? true : null" class="btn btn-secondary"
+        (click)="goBack()">Back</button>
       <button type="submit" [attr.disabled]="processing ? true : null" class="btn btn-primary">Register</button>
     </div>
 
