@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://dixit-server.cleverapps.io',
+  apiUrl: 'https://dixit-game-server.herokuapp.com',
   assetsUrl: '/Dixit',
   firebase: {
     apiKey: "AIzaSyBOOAjhKXxuKFmwZ14Gtdqf5Zg2P770xiU",
