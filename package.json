@@ -31,7 +31,7 @@
     "ngx-socket-io": "^3.0.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "underscore": "^1.10.2",
+    "underscore": "^1.12.1",
     "yarn": "^1.22.5",
     "zone.js": "~0.10.2"
   },
