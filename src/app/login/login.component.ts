@@ -37,12 +37,12 @@ export class LoginComponent implements OnInit {
     return this.submitted && this.loginForm.controls.password.errors != null;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loginForm = this._formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this._authService.logout();
+    await this._authService.logout();
   }
 
   async onSubmit() {
