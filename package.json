@@ -3,11 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
+    "start:dev": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
+  },
+  "engines": {
+    "node": "14.15.4",
+    "npm": "6.14.10"
   },
   "private": true,
   "dependencies": {
@@ -26,14 +32,19 @@
     "@types/underscore": "^1.9.4",
     "bootstrap": "^4.4.1",
     "crypto-js": "^4.0.0",
+    "express": "^4.17.1",
     "firebase": "^7.20.0",
     "font-awesome": "^4.7.0",
     "ngx-socket-io": "^3.0.1",
+    "path": "^0.12.7",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "underscore": "^1.13.1",
     "yarn": "^1.22.5",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@angular/cli": "~9.0.7",
+    "@angular/compiler-cli": "~9.0.7",
+    "typescript": "~3.7.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1001.1",
