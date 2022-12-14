@@ -34,7 +34,7 @@
     "@types/underscore": "^1.9.4",
     "bootstrap": "^4.4.1",
     "crypto-js": "^4.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase": "^7.20.0",
     "font-awesome": "^4.7.0",
     "ngx-socket-io": "^4.1.0",
